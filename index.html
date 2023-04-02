@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-  <link href="/style.css" rel="stylesheet" type="text/css" />
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Les petits plats</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les petits plats</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <script
+      src="https://kit.fontawesome.com/9d010d1a2f.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
 
 <body>
+  <header>
+    <img
+      src="assets/logo.png"
+      alt="Les petits plats home page"
+      title="Les petits plats"
+    />
+  </header>
 
+  <section id="search">
+    <div>
+      <input
+        type="text"
+        id="search_recipe"
+        placeholder="Rechercher une recette"
+      />
+      <button id="search_btn_recipe">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </section>
+
+  <section id="result">
+    <!-- html généré dynamiquement -->
+  </section>
 </body>
-
 </html>

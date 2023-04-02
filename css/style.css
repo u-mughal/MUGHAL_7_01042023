@@ -1,0 +1,9 @@
+@import url(index.css);
+@import url(reset.css);
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto&display=swap");
+
+body {
+  margin: 20px 50px;
+  font-family: "Lato";
+  font-size: 18px;
+}
