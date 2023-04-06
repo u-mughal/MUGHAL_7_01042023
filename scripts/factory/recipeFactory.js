@@ -1,13 +1,9 @@
-/* eslint-disable no-unused-vars */
 export function recipeFactory(data) {
   const {
     id,
     name,
     servings,
     ingredients,
-    ingredient,
-    quantity,
-    unit,
     time,
     description,
     appliance,
@@ -27,8 +23,10 @@ export function recipeFactory(data) {
             </div>
           </header>
           <div class="recipe_details">
-            <ul class="recipe_ingredients"></ul>
-            <p class="recipe_description">${description}</p>
+          <div class="recipe_ingredients"></div>
+          <div class="recipe_description">
+            <p class="recipe_description_text">${description}</p>
+          </div>
           </div>
         </div>
       </a>
@@ -38,21 +36,32 @@ export function recipeFactory(data) {
   }
 
   function getIngredientsList() {
-    // const ingredientsList =
-    // document.getElementsByClassName("recipe_ingredients");
-    let food;
+    const ingredientsList = document.createElement("ul");
+    ingredientsList.classList.add("recipe_ingredients_list");
 
     ingredients.forEach((ingredient) => {
-      // const food = document.createElement("li");
-      // food.textContent = ingredient["ingredient"];
-      // ingredientsList.appendChild(food);
-      food = `<li>${ingredient["ingredient"]}: ${ingredient["quantity"]} ${ingredient["unit"]}</li>`;
-      // ingredientsList.insertAdjacentHTML("afterbegin", food);
-      // ingredientsList.appendChild(food);
+      const food = document.createElement("li");
+
+      const foodIngd = document.createElement("p");
+      foodIngd.classList.add("recipe_ingredient");
+      foodIngd.textContent = `${ingredient["ingredient"]}`;
+      food.appendChild(foodIngd);
+
+      const foodQty = document.createElement("p");
+      if (
+        ("ingredient" in ingredient) &
+        ("quantity" in ingredient) &
+        ("unit" in ingredient)
+      ) {
+        foodQty.textContent = `: ${ingredient["quantity"]}${ingredient["unit"]}`;
+      } else if (("ingredient" in ingredient) & ("quantity" in ingredient)) {
+        foodQty.textContent = `: ${ingredient["quantity"]}`;
+      }
+      food.appendChild(foodQty);
+      ingredientsList.appendChild(food);
     });
 
-    // console.log(ingredientsList);
-    return food;
+    return ingredientsList;
   }
 
   return { getRecipeCardDOM, getIngredientsList };

@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import { getRecipes } from "./api/services.js";
 import { recipeFactory } from "./factory/recipeFactory.js";
 
@@ -10,10 +9,9 @@ async function displayRecipes(datas) {
     const recipeCardDOM = recipeModel.getRecipeCardDOM();
     recipesSection.insertAdjacentHTML("afterbegin", recipeCardDOM);
 
-    const ingredientsList =
-      document.getElementsByClassName("recipe_ingredients");
+    const ingredientsList = document.querySelector(".recipe_ingredients");
+
     recipeModel = recipeFactory(data);
-    debugger;
     const ingredientDOM = recipeModel.getIngredientsList();
     ingredientsList.appendChild(ingredientDOM);
   });
