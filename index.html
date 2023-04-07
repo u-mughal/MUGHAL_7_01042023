@@ -33,6 +33,28 @@
           <i class="fas fa-search"></i>
         </button>
       </div>
+      <div class="filter">
+        <button id="filter_btn_ingredient" class="filter_btn trigger">
+          <span>Ingrédients</span>
+          <span><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div id="filter_ingredient">
+          <input
+            type="text"
+            id="input_ingredient"
+            placeholder="Rechercher un ingrédient"
+          />
+          <span class="trigger">
+            <i class="fas fa-chevron-up chevron_list" aria-hidden="true"></i>
+          </span>
+          <ul class="filter_list">
+            <li id="popularity" class="list_option focus">
+              <span>Popularité</span>
+            </li>
+            <li id="date" class="list_option focus">Date</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section id="recipes">

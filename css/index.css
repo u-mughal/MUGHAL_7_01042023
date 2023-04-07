@@ -4,7 +4,7 @@ header {
 }
 
 #search {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 #search_recipe {
@@ -36,14 +36,15 @@ header {
 #recipes {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  justify-content: space-between;
+  row-gap: 50px;
 }
 
 /* RECIPE CARD */
 .recipe_card {
   flex-basis: 30%;
   height: 364px;
-  width: 380px;
+  min-width: 380px;
 }
 
 .recipe_link {
@@ -53,7 +54,7 @@ header {
 
 .recipe_img {
   height: 178px;
-  width: 380px;
+  min-width: 380px;
   background-color: #c7bebe;
   border-radius: 5px 5px 0 0;
 }
@@ -61,7 +62,7 @@ header {
 .recipe_content {
   background-color: #e7e7e7;
   height: 186px;
-  width: 380px;
+  min-width: 380px;
   padding: 20px;
   border-radius: 0 0 5px 5px;
 }

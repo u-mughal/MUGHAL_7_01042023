@@ -1,0 +1,68 @@
+.filter {
+  /* position: relative; */
+  /* font-weight: bold; */
+  padding-top: 20px;
+}
+
+.filter_btn {
+  width: 170px;
+  padding: 24px 20px;
+  font-family: "Lato";
+  font-weight: bold;
+  font-size: 18px;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+}
+
+.filter_btn,
+.filter_list {
+  /* position: absolute;
+  top: -25px;
+  left: 80px; */
+  color: white;
+  border-radius: 5px;
+}
+
+.filter_list {
+  display: none;
+  width: 170px;
+  margin: 0;
+  padding: 5px 10px;
+  font-weight: bold;
+  box-shadow: 0px 6px 18px -14px #000000;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#filter_btn_ingredient {
+  background-color: #3282f7;
+}
+
+#filter_ingredient {
+  display: none;
+}
+
+/* #input_ingredient {
+} */
+
+.list_option {
+  position: relative;
+  padding: 19px 10px;
+  border-top: 1px solid white;
+}
+
+.fa-chevron-down,
+.fa-chevron-up {
+  position: absolute;
+  left: 165px;
+}
+
+.chevron_list {
+  left: 120px;
+}
+
+#popularity {
+  display: flex;
+  border-top: none;
+}
