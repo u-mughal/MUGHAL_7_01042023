@@ -1,11 +1,11 @@
-// déclaration variables
+// Déclaration des variables
 const filterBtn = document.querySelector(".filter_btn");
 filterBtn.style.display = "inline";
 const filterList = document.querySelector(".filter_list");
 
-// ouverture/fermeture de la dropdown de tri
-export function toggleDropdown() {
-  if (filterBtn.style.display == "inline") {
+// Ouverture/Fermeture dropdown 
+export function toggleDropDown(elt) {
+  if (elt.style.display == "inline") {
     filterBtn.style.display = "none";
     filterList.style.display = "block";
   } else {
@@ -16,5 +16,5 @@ export function toggleDropdown() {
 
 const triggers = document.querySelectorAll(".trigger");
 triggers.forEach((btn) =>
-  btn.addEventListener("click", () => toggleDropdown())
+  btn.addEventListener("click", (e) => toggleDropDown(e.target))
 );

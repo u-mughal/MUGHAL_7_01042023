@@ -1,43 +1,55 @@
 export function recipeFactory(data) {
-  const {
-    id,
-    name,
-    servings,
-    ingredients,
-    time,
-    description,
-    appliance,
-    ustensils,
-  } = data;
+  const {id, name, servings, ingredients, time, description, appliance, ustensils} = data;
 
   function getRecipeCardDOM() {
-    let card = `<article class="recipe_card">
-      <a href="#" class="recipe_link">
-        <div class="recipe_img"></div>
-        <div class="recipe_content">
-          <header class="recipe_header">
-            <h3>${name}</h3>
-            <div class="recipe_time">
-            <i class="far fa-clock"></i>
-              <p class="recipe_minute">${time} min</p>
-            </div>
-          </header>
-          <div class="recipe_details">
-          <div class="recipe_ingredients"></div>
-          <div class="recipe_description">
-            <p class="recipe_description_text">${description}</p>
-          </div>
-          </div>
-        </div>
-      </a>
-    </article>`;
+    const card = document.createElement("article");
+    card.classList.add("recipe_card");
 
-    return card;
-  }
+    const link = document.createElement("a");
+    link.setAttribute("href", "#");
+    link.classList.add("recipe_link");
+    card.appendChild(link);
 
-  function getIngredientsList() {
+    const img = document.createElement("div");
+    img.classList.add("recipe_img");
+    link.appendChild(img);
+
+    const content = document.createElement("div");
+    content.classList.add("recipe_content");
+    link.appendChild(content);
+
+    const header = document.createElement("header");
+    header.classList.add("recipe_header");
+    content.appendChild(header);
+
+    const h3 = document.createElement("h");
+    h3.textContent = name;
+    header.appendChild(h3);
+
+    const timing = document.createElement("div");
+    timing.classList.add("recipe_time");
+    header.appendChild(timing);
+
+    const clock = document.createElement("i");
+    clock.classList.add("far", "fa-clock");
+    timing.appendChild(clock);
+
+    const minute = document.createElement("p");
+    minute.classList.add("recipe_minute");
+    minute.textContent = `${time} min`;
+    timing.appendChild(minute);
+
+    const details = document.createElement("div");
+    details.classList.add("recipe_details");
+    content.appendChild(details);
+
+    const recipeIngredients = document.createElement("div");
+    recipeIngredients.classList.add("recipe_ingredients");
+    details.appendChild(recipeIngredients);
+
     const ingredientsList = document.createElement("ul");
     ingredientsList.classList.add("recipe_ingredients_list");
+    recipeIngredients.appendChild(ingredientsList);
 
     ingredients.forEach((ingredient) => {
       const food = document.createElement("li");
@@ -61,8 +73,17 @@ export function recipeFactory(data) {
       ingredientsList.appendChild(food);
     });
 
-    return ingredientsList;
+    const recipeDescription = document.createElement("div");
+    recipeDescription.classList.add("recipe_description");
+    details.appendChild(recipeDescription);
+
+    const descriptionText = document.createElement("p");
+    descriptionText.classList.add("recipe_description_text");
+    descriptionText.textContent = description;
+    recipeDescription.appendChild(descriptionText);
+
+    return card;
   }
 
-  return { getRecipeCardDOM, getIngredientsList };
+  return { getRecipeCardDOM };
 }

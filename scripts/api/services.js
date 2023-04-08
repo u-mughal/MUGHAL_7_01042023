@@ -1,10 +1,10 @@
 // récupération des recettes
 export async function getRecipes() {
-  const response = await fetch("scripts/datas/recipes.json");
-  if (!response.ok) {
-    console.log(`Recettes: ${response.statusText}`);
+  try {
+    const response = await fetch("scripts/datas/recipes.json");
+    const datas = await response.json();
+    return datas;
+  } catch (err) {
+    console.error(err);
   }
-  const datas = await response.json();
-
-  return datas;
 }
