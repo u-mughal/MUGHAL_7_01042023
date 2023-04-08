@@ -1,6 +1,7 @@
 import { getRecipes } from "./api/services.js";
 import { recipeFactory } from "./factory/recipeFactory.js";
 import { searchRecipe } from "./utils/searchBar.js";
+import { toggleDropdown } from "./utils/filter.js";
 
 // création et affichage des cards recette via la recipeFactory
 async function displayRecipes(datas) {
@@ -23,14 +24,3 @@ async function init() {
 }
 
 init();
-
-
-//Event Listener
-const searchBar = document.querySelector("#search_recipe");
-searchBar.addEventListener("keyup", (e) => {
-  const value = e.target.value;
-  const regex = /[A-Za-z0-9]{3,}/;
-  if (regex.test(value)) {
-    searchRecipe(value);
-  }
-});

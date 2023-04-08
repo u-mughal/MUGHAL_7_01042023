@@ -1,3 +1,8 @@
+#filters {
+  display: flex;
+  gap: 20px;
+}
+
 .filter {
   /* position: relative; */
   /* font-weight: bold; */
@@ -6,7 +11,7 @@
 
 .filter_btn {
   width: 170px;
-  padding: 24px 20px;
+  padding: 20px;
   font-family: "Lato";
   font-weight: bold;
   font-size: 18px;
@@ -26,43 +31,50 @@
 
 .filter_list {
   display: none;
-  width: 170px;
-  margin: 0;
-  padding: 5px 10px;
-  font-weight: bold;
-  box-shadow: 0px 6px 18px -14px #000000;
   cursor: pointer;
   z-index: 1;
 }
 
-#filter_btn_ingredient {
+#filter_btn_ingredient,
+#input_ingredient {
   background-color: #3282f7;
 }
 
-#filter_ingredient {
-  display: none;
+#filter_btn_appliance,
+#input_appliance {
+  background-color: #68d9a4;
 }
 
-/* #input_ingredient {
-} */
+#filter_btn_ustensil,
+#input_ustensil {
+  background-color: #ed6454;
+}
 
-.list_option {
+.filter_input {
+  width: 667px;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+  color: white;
+  font-family: "Lato";
+  font-size: 18px;
+}
+
+.filter_input::placeholder {
+  color: #99c1fb;
+  /* font-family: "Lato"; */
+  /* font-size: 18px; */
+  font-weight: bolder;
+}
+
+.fa-chevron-down {
   position: relative;
-  padding: 19px 10px;
-  border-top: 1px solid white;
+  left: 20px;
+  top: 2px;
 }
 
-.fa-chevron-down,
 .fa-chevron-up {
-  position: absolute;
-  left: 165px;
-}
-
-.chevron_list {
-  left: 120px;
-}
-
-#popularity {
-  display: flex;
-  border-top: none;
+  position: relative;
+  top: 1px;
+  right: 40px;
 }
