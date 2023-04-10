@@ -1,3 +1,5 @@
+// import { recipeFactory } from "./recipeFactory.js";
+
 export function filterFactory(data) {
   const option = data;
   const optionLowerCase = option.toLowerCase();
@@ -8,15 +10,14 @@ export function filterFactory(data) {
   const optionWithoutAccent = optionSingular
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
-  let btn;
-  let filterList;
 
+  // renvoi l'élément HTML d'un filtre
   function getFilterCardDOM() {
     const filter = document.createElement("div");
     filter.setAttribute("id", `filter_${optionWithoutAccent}`);
     filter.classList.add("filter");
 
-    btn = document.createElement("button");
+    const btn = document.createElement("button");
     btn.setAttribute("id", `filter_btn_${optionWithoutAccent}`);
     btn.classList.add("filter_btn");
     btn.style.display = "inline";
@@ -35,7 +36,7 @@ export function filterFactory(data) {
     btnChevronIcon.classList.add("fas", "fa-chevron-down");
     btnChevron.appendChild(btnChevronIcon);
 
-    filterList = document.createElement("div");
+    const filterList = document.createElement("div");
     filterList.setAttribute("id", `filter_by_${optionWithoutAccent}`);
     filterList.classList.add("filter_list");
     filter.appendChild(filterList);
@@ -45,6 +46,13 @@ export function filterFactory(data) {
     input.setAttribute("id", `input_${optionWithoutAccent}`);
     input.classList.add("filter_input");
     input.setAttribute("placeholder", `Rechercher un ${optionSingular}`);
+    input.addEventListener("keyup", (e) => {
+      const value = e.target.value;
+      const regex = /[A-Za-z0-9]{3,}/;
+      if (regex.test(value)) {
+        displayFilterList(e.target.value);
+      }
+    });
     filterList.appendChild(input);
 
     const inputChevron = document.createElement("span");
@@ -66,7 +74,7 @@ export function filterFactory(data) {
     return filter;
   }
 
-  // ouverture/fermeture de la dropdown de tri
+  // gestion de la dropdown de filtre
   function toggleDropDown(optionWithoutAccent) {
     const allList = document.querySelectorAll(".filter_list");
     allList.forEach((list) => {
@@ -85,6 +93,17 @@ export function filterFactory(data) {
       `filter_by_${optionWithoutAccent}`
     );
     filterSelected.style.display = "block";
+    displayFilterList();
+  }
+
+  // function pour remplir les li avec ou sans saisie
+  function displayFilterList(keyword = null) {
+    // if (keyword) {
+    //   let filterModel = recipeFactory(keyword);
+    //   const filterList = filterModel.getList();
+    //   console.log(filterList);
+    // } else {
+    // }
   }
 
   return { getFilterCardDOM };
