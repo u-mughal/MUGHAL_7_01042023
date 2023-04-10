@@ -8,15 +8,20 @@ export function filterFactory(data) {
   const optionWithoutAccent = optionSingular
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
+  let btn;
+  let filterList;
 
   function getFilterCardDOM() {
     const filter = document.createElement("div");
     filter.setAttribute("id", `filter_${optionWithoutAccent}`);
     filter.classList.add("filter");
 
-    const btn = document.createElement("button");
+    btn = document.createElement("button");
     btn.setAttribute("id", `filter_btn_${optionWithoutAccent}`);
-    btn.classList.add("filter_btn", "trigger");
+    btn.classList.add("filter_btn");
+    btn.style.display = "inline";
+    // btn.classList.add("filter_btn", "trigger");
+    btn.addEventListener("click", () => toggleDropDown(optionWithoutAccent));
     filter.appendChild(btn);
 
     const btnName = document.createElement("span");
@@ -30,7 +35,8 @@ export function filterFactory(data) {
     btnChevronIcon.classList.add("fas", "fa-chevron-down");
     btnChevron.appendChild(btnChevronIcon);
 
-    const filterList = document.createElement("div");
+    filterList = document.createElement("div");
+    filterList.setAttribute("id", `filter_by_${optionWithoutAccent}`);
     filterList.classList.add("filter_list");
     filter.appendChild(filterList);
 
@@ -42,7 +48,10 @@ export function filterFactory(data) {
     filterList.appendChild(input);
 
     const inputChevron = document.createElement("span");
-    inputChevron.classList.add("trigger");
+    // inputChevron.classList.add("trigger");
+    inputChevron.addEventListener("click", () =>
+      toggleDropDown(optionWithoutAccent)
+    );
     filterList.appendChild(inputChevron);
 
     const inputChevronIcon = document.createElement("i");
@@ -55,6 +64,27 @@ export function filterFactory(data) {
     filterList.appendChild(filterUl);
 
     return filter;
+  }
+
+  // ouverture/fermeture de la dropdown de tri
+  function toggleDropDown(optionWithoutAccent) {
+    const allList = document.querySelectorAll(".filter_list");
+    allList.forEach((list) => {
+      list.style.display = "none";
+    });
+    const allBtn = document.querySelectorAll(".filter_btn");
+    allBtn.forEach((list) => {
+      list.style.display = "block";
+    });
+
+    const btnClicked = document.getElementById(
+      `filter_btn_${optionWithoutAccent}`
+    );
+    btnClicked.style.display = "none";
+    const filterSelected = document.getElementById(
+      `filter_by_${optionWithoutAccent}`
+    );
+    filterSelected.style.display = "block";
   }
 
   return { getFilterCardDOM };

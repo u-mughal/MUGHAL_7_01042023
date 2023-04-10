@@ -61,10 +61,14 @@
 }
 
 .filter_input::placeholder {
-  color: #99c1fb;
+  color: #ffffffa6;
   /* font-family: "Lato"; */
   /* font-size: 18px; */
   font-weight: bolder;
+}
+
+.filter_input:focus-visible {
+  outline: none;
 }
 
 .fa-chevron-down {
