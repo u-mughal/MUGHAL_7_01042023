@@ -1,26 +1,26 @@
 export function filterFactory(data) {
   const option = data;
-  debugger;
-  const optionWithoutQuote = option.replace(/['"]+/g, "");
   const optionLowerCase = option.toLowerCase();
-  const optionSingular = optionLowerCase.replace(/[s]/, "");
+  let optionSingular;
+  if (optionLowerCase.endsWith("s")) {
+    optionSingular = optionLowerCase.slice(0, -1);
+  }
   const optionWithoutAccent = optionSingular
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
-  console.log(optionSingular);
 
   function getFilterCardDOM() {
     const filter = document.createElement("div");
-    filter.setAttribute("id", `"filter_${optionWithoutAccent}"`);
+    filter.setAttribute("id", `filter_${optionWithoutAccent}`);
     filter.classList.add("filter");
 
     const btn = document.createElement("button");
-    btn.setAttribute("id", `"filter_btn_${optionWithoutAccent}"`);
+    btn.setAttribute("id", `filter_btn_${optionWithoutAccent}`);
     btn.classList.add("filter_btn", "trigger");
     filter.appendChild(btn);
 
     const btnName = document.createElement("span");
-    btnName.textContent = `"${optionWithoutQuote}"`;
+    btnName.textContent = `${option}`;
     btn.appendChild(btnName);
 
     const btnChevron = document.createElement("span");
@@ -36,9 +36,9 @@ export function filterFactory(data) {
 
     const input = document.createElement("input");
     input.setAttribute("type", "text");
-    input.setAttribute("id", `"input_${optionWithoutAccent}"`);
+    input.setAttribute("id", `input_${optionWithoutAccent}`);
     input.classList.add("filter_input");
-    input.setAttribute("placeholder", `"Rechercher un ${optionSingular}"`);
+    input.setAttribute("placeholder", `Rechercher un ${optionSingular}`);
     filterList.appendChild(input);
 
     const inputChevron = document.createElement("span");
@@ -50,7 +50,7 @@ export function filterFactory(data) {
     inputChevron.appendChild(inputChevronIcon);
 
     const filterUl = document.createElement("ul");
-    filterUl.setAttribute("id", `"filter_list_${optionWithoutAccent}"`);
+    filterUl.setAttribute("id", `filter_list_${optionWithoutAccent}`);
     filterUl.classList.add("list_option");
     filterList.appendChild(filterUl);
 
