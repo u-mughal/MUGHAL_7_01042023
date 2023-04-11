@@ -3,8 +3,6 @@ import { recipeFactory } from "./factory/recipeFactory.js";
 import { filterFactory } from "./factory/filterFactory.js";
 import { searchRecipe } from "./utils/searchBar.js";
 
-// let ingredientsList = [];
-
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(datas) {
   const recipesSection = document.getElementById("recipes");
@@ -13,16 +11,11 @@ function displayRecipes(datas) {
     let recipeModel = recipeFactory(data);
     const recipeCardDOM = recipeModel.getRecipeCardDOM();
     recipesSection.appendChild(recipeCardDOM);
-
-    // recipeModel.getIngredientsList();
-    // ingredientsList.push(ingredient["ingredient"]);
-    // console.log(ingredientsList);
   });
 }
 
-//création et affichage des filtres via la filterFactory
 const filterOptions = ["Ingrédients", "Appareils", "Ustensiles"];
-
+//création et affichage des filtres via la filterFactory
 function displayFilter(filterOptions) {
   const filtersSection = document.getElementById("filters");
 
@@ -33,10 +26,58 @@ function displayFilter(filterOptions) {
   });
 }
 
+let ingredientsList = [];
+// création liste ingrédients via la recipeFactory
+function createListIngredients(datas) {
+  let ingredientsListBrut = [];
+  datas.forEach((data) => {
+    let listeModel = recipeFactory(data);
+    const ingredients = listeModel.getIngredients();
+    ingredientsListBrut.push(...ingredients);
+  });
+  ingredientsListBrut.sort();
+  ingredientsList = [...new Set(ingredientsListBrut)];
+
+  return ingredientsList;
+}
+
+let appliancesList = [];
+// création liste appareils via la recipeFactory
+function createListAppliances(datas) {
+  let applianceListBrut = [];
+  datas.forEach((data) => {
+    let listeModel = recipeFactory(data);
+    const appliances = listeModel.getAppliances();
+    applianceListBrut.push(appliances);
+  });
+  applianceListBrut.sort();
+  appliancesList = [...new Set(applianceListBrut)];
+
+  return appliancesList;
+}
+
+let ustensilsList = [];
+// création liste ustensiles via la recipeFactory
+function createListUstensils(datas) {
+  let ustensilsListBrut = [];
+  datas.forEach((data) => {
+    let listeModel = recipeFactory(data);
+    const ustensils = listeModel.getUstensiles();
+    ustensilsListBrut.push(...ustensils);
+  });
+  ustensilsListBrut.sort();
+  ustensilsList = [...new Set(ustensilsListBrut)];
+  console.log(ustensilsList);
+  return ustensilsList;
+}
+
 async function init() {
   const datas = await getRecipes();
   displayRecipes(datas);
   displayFilter(filterOptions);
+  createListIngredients(datas);
+  createListAppliances(datas);
+  createListUstensils(datas);
 }
 
 init();
