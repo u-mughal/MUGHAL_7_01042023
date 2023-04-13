@@ -126,7 +126,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  column-gap: 50px;
+  column-gap: 70px;
   row-gap: 10px;
   position: absolute;
   height: 397px;
@@ -134,5 +134,17 @@
   background: black;
   padding: 0 16px 19px;
   border-radius: 0 0 5px 5px;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-x: scroll;
+}
+
+/* ::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+  scrollbar-color: rebeccapurple;
+  scrollbar-width: thin;
+} */
+
+.filter_li {
+  width: 150px;
 }

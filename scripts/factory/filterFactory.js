@@ -78,6 +78,7 @@ export function filterFactory(data) {
     const filterUl = document.createElement("ul");
     filterUl.setAttribute("id", `filter_list_${selectedFilter}`);
     filterUl.classList.add("list_option");
+    filterUl.classList.add("::-webkit-scrollbar");
     filterList.appendChild(filterUl);
 
     return filter;
