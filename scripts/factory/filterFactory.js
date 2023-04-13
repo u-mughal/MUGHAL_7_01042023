@@ -71,6 +71,14 @@ export function filterFactory(data) {
     filterUl.classList.add("list_option");
     filterList.appendChild(filterUl);
 
+    // fonction séparée ou intégrée à la cardDOM du filtre
+    // X.forEach((x) => {
+    //   const filterLi = document.createElement("li");
+    //   filterLi.classList.add("filter_li");
+    //   filterLi.content = x;
+    //   filterUl.appendChild(filterLi);
+    // })
+
     return filter;
   }
 
@@ -96,7 +104,17 @@ export function filterFactory(data) {
     displayFilterList();
   }
 
+  // renvoi l'élément HTML d'un filtre
+  // function liCardDOM() {
+  //   const filterLi = document.createElement("li");
+  //   filterLi.classList.add("filter_li");
+  //   filterLi.content = ??;
+
+  //   return filterLi;
+  // }
+
   // function pour remplir les li avec ou sans saisie
+  // ici on a l'option filtre mais pas le tableau/liste
   function displayFilterList(keyword = null) {
     // if (keyword) {
     //   let filterModel = recipeFactory(keyword);

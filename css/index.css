@@ -117,7 +117,7 @@ header {
 }
 
 .recipe_description_text {
-  height: 109px;
+  height: 98px;
   /* white-space: nowrap; */
   overflow: hidden;
   text-overflow: ellipsis;

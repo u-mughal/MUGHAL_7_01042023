@@ -26,58 +26,54 @@ function displayFilter(filterOptions) {
   });
 }
 
-let ingredientsList = [];
+let filterOptionList = [];
 // création liste ingrédients via la recipeFactory
-function createListIngredients(datas) {
-  let ingredientsListBrut = [];
+// une fonction pour 3 listes ? paramètre obj recette pas info option filtre
+function createFilterOptionList(datas) {
+  let filterOptionListBrut = [];
   datas.forEach((data) => {
     let listeModel = recipeFactory(data);
-    const ingredients = listeModel.getIngredients();
-    ingredientsListBrut.push(...ingredients);
+    if (filterOptions == "Ingrédients") {
+      const ingredients = listeModel.getIngredients();
+      filterOptionListBrut.push(...ingredients);
+    }
+    if (filterOptions == "Appareils") {
+      const appliances = listeModel.getAppliances();
+      filterOptionListBrut.push(appliances);
+    }
+    if (filterOptions == "Ustensiles") {
+      const ustensils = listeModel.getUstensiles();
+      filterOptionListBrut.push(...ustensils);
+    }
   });
-  ingredientsListBrut.sort();
-  ingredientsList = [...new Set(ingredientsListBrut)];
+  filterOptionListBrut.sort();
+  filterOptionList = [...new Set(filterOptionListBrut)];
 
-  return ingredientsList;
+  return filterOptionList;
 }
 
-let appliancesList = [];
-// création liste appareils via la recipeFactory
-function createListAppliances(datas) {
-  let applianceListBrut = [];
-  datas.forEach((data) => {
-    let listeModel = recipeFactory(data);
-    const appliances = listeModel.getAppliances();
-    applianceListBrut.push(appliances);
-  });
-  applianceListBrut.sort();
-  appliancesList = [...new Set(applianceListBrut)];
+// rempli la liste des filtres selon option tri sélectionné
+function filledListFilter() {}
 
-  return appliancesList;
+// function pour remplir les li avec ou sans saisie
+function displayFilterList(keyword = null) {
+  // if (keyword) {
+  //   let filterModel = recipeFactory(keyword);
+  //   const filterList = filterModel.getList();
+  //   console.log(filterList);
+  // } else {
+  // }
 }
 
-let ustensilsList = [];
-// création liste ustensiles via la recipeFactory
-function createListUstensils(datas) {
-  let ustensilsListBrut = [];
-  datas.forEach((data) => {
-    let listeModel = recipeFactory(data);
-    const ustensils = listeModel.getUstensiles();
-    ustensilsListBrut.push(...ustensils);
-  });
-  ustensilsListBrut.sort();
-  ustensilsList = [...new Set(ustensilsListBrut)];
-  console.log(ustensilsList);
-  return ustensilsList;
-}
+//
 
 async function init() {
   const datas = await getRecipes();
   displayRecipes(datas);
   displayFilter(filterOptions);
-  createListIngredients(datas);
-  createListAppliances(datas);
-  createListUstensils(datas);
+  // createListIngredients(datas);
+  // createListAppliances(datas);
+  // createListUstensils(datas);
 }
 
 init();
@@ -103,3 +99,50 @@ searchBar.addEventListener("keyup", (e) => {
 
 // boucle en 1er
 // loqigue tri : dans un nvo tableau prend la 1ere variable et une seconde
+
+//------------------------------------------------------------------------------------------
+// une fonction pour chaque création de liste ?
+// let ingredientsList = [];
+// // création liste ingrédients via la recipeFactory
+// function createListIngredients(datas) {
+//   let ingredientsListBrut = [];
+//   datas.forEach((data) => {
+//     let listeModel = recipeFactory(data);
+//     const ingredients = listeModel.getIngredients();
+//     ingredientsListBrut.push(...ingredients);
+//   });
+//   ingredientsListBrut.sort();
+//   ingredientsList = [...new Set(ingredientsListBrut)];
+
+//   return ingredientsList;
+// }
+
+// let appliancesList = [];
+// // création liste appareils via la recipeFactory
+// function createListAppliances(datas) {
+//   let applianceListBrut = [];
+//   datas.forEach((data) => {
+//     let listeModel = recipeFactory(data);
+//     const appliances = listeModel.getAppliances();
+//     applianceListBrut.push(appliances);
+//   });
+//   applianceListBrut.sort();
+//   appliancesList = [...new Set(applianceListBrut)];
+
+//   return appliancesList;
+// }
+
+// let ustensilsList = [];
+// // création liste ustensiles via la recipeFactory
+// function createListUstensils(datas) {
+//   let ustensilsListBrut = [];
+//   datas.forEach((data) => {
+//     let listeModel = recipeFactory(data);
+//     const ustensils = listeModel.getUstensiles();
+//     ustensilsListBrut.push(...ustensils);
+//   });
+//   ustensilsListBrut.sort();
+//   ustensilsList = [...new Set(ustensilsListBrut)];
+//   console.log(ustensilsList);
+//   return ustensilsList;
+// }
