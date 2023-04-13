@@ -1,7 +1,6 @@
 export function filterFactory(data) {
   const option = data;
   const optionKey = Object.keys(option);
-  // console.log("lg4", optionKey);
   const optionName = optionKey.toString();
   const optionLowerCase = optionName.toLowerCase();
   let optionSingular;
@@ -14,7 +13,6 @@ export function filterFactory(data) {
   const selectedFilter = optionWithoutAccent;
   const optionValue = Object.values(option);
   const optionArray = optionValue[0];
-  // console.log("lg16", typeof optionArray, optionArray);
 
   // renvoi l'élément HTML d'un filtre
   function getFilterCardDOM() {
@@ -53,11 +51,17 @@ export function filterFactory(data) {
     input.setAttribute("id", `input_${selectedFilter}`);
     input.classList.add("filter_input");
     input.setAttribute("placeholder", `Rechercher un ${optionSingular}`);
-    input.addEventListener("keyup", (e) => {
+    input.addEventListener("input", (e) => {
       const value = e.target.value;
-      const regex = /[A-Za-z0-9]{3,}/;
-      if (regex.test(value)) {
+      const regexZeroCaracters = /^$/;
+      const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/;
+      const regexThreeCaracters = /[A-Za-z0-9]{3,}/;
+      if (regexThreeCaracters.test(value)) {
         filledListFilter(e.target.value);
+      } else if (regexZeroCaracters.test(value)) {
+        filledListFilter();
+      } else if (regexOneOrTwoCaracters.test(value)) {
+        null;
       }
     });
     filterList.appendChild(input);
@@ -103,18 +107,40 @@ export function filterFactory(data) {
     }
   }
 
+  function majFirstLetter(elt) {
+    return (elt + "").charAt(0).toUpperCase() + elt.substr(1);
+  }
+
   // rempli la liste des filtres selon option tri sélectionné
   // function pour remplir les li avec ou sans saisie
   function filledListFilter(keyword = null) {
     const liSection = document.getElementById(`filter_list_${selectedFilter}`);
-
     if (keyword) {
-      console.log(keyword, selectedFilter);
+      const keywordFormated = keyword
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      const regex = new RegExp(keywordFormated);
+      const matchKeywords = optionArray.filter((o) => {
+        const oFormated = o.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        return regex.test(oFormated);
+      });
+      liSection.innerHTML = "";
+      matchKeywords.forEach((elt) => {
+        const liFilter = document.createElement("li");
+        liFilter.classList.add("filter_li");
+        const eltFormated = majFirstLetter(elt);
+        liFilter.textContent = eltFormated;
+        liFilter.addEventListener("click", (e) => filterByKeyword(e));
+        liSection.appendChild(liFilter);
+      });
     } else {
+      liSection.innerHTML = "";
       optionArray.forEach((elt) => {
         const liFilter = document.createElement("li");
         liFilter.classList.add("filter_li");
-        liFilter.textContent = elt;
+        const eltFormated = majFirstLetter(elt);
+        liFilter.textContent = eltFormated;
         liFilter.addEventListener("click", (e) => filterByKeyword(e));
         liSection.appendChild(liFilter);
       });

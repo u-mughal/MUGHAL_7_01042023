@@ -97,21 +97,26 @@ export function recipeFactory(data) {
 
   // renvoi les ingrédients d'une recette
   function getIngredients() {
-    const ingredientsToList = [];
+    const formatedIngredients = [];
     ingredients.forEach((ingredient) => {
-      ingredientsToList.push(ingredient["ingredient"]);
+      formatedIngredients.push(ingredient["ingredient"].toLowerCase());
     });
-    return ingredientsToList;
+    return formatedIngredients;
   }
 
   // renvoi les appareils d'une recette
   function getAppliances() {
-    return appliance;
+    const formatedAppliance = appliance.toLowerCase();
+    return formatedAppliance;
   }
 
   // renvoi les ustensiles d'une recette
   function getUstensiles() {
-    return ustensils;
+    const formatedUstensils = [];
+    ustensils.forEach((ustensil) => {
+      formatedUstensils.push(ustensil.toLowerCase());
+    });
+    return formatedUstensils;
   }
 
   return { getRecipeCardDOM, getIngredients, getAppliances, getUstensiles };

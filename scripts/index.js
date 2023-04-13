@@ -116,29 +116,3 @@ searchBar.addEventListener("keyup", (e) => {
 // loqigue tri : dans un nvo tableau prend la 1ere variable et une seconde
 
 //------------------------------------------------------------------------------------------
-
-// let filterOptionList = [];
-// // création liste ingrédients via la recipeFactory
-// // une fonction pour 3 listes ? paramètre obj recette pas info option filtre
-// function createFilterOptionList(datas) {
-//   let filterOptionListBrut = [];
-//   datas.forEach((data) => {
-//     let listeModel = recipeFactory(data);
-//     if (filterOptions == "Ingrédients") {
-//       const ingredients = listeModel.getIngredients();
-//       filterOptionListBrut.push(...ingredients);
-//     }
-//     if (filterOptions == "Appareils") {
-//       const appliances = listeModel.getAppliances();
-//       filterOptionListBrut.push(appliances);
-//     }
-//     if (filterOptions == "Ustensiles") {
-//       const ustensils = listeModel.getUstensiles();
-//       filterOptionListBrut.push(...ustensils);
-//     }
-//   });
-//   filterOptionListBrut.sort();
-//   filterOptionList = [...new Set(filterOptionListBrut)];
-
-//   return filterOptionList;
-// }
