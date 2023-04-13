@@ -3,6 +3,13 @@ import { recipeFactory } from "./factory/recipeFactory.js";
 import { filterFactory } from "./factory/filterFactory.js";
 import { searchRecipe } from "./utils/searchBar.js";
 
+// déclaration variables
+let ingredientsList = [];
+let appliancesList = [];
+let ustensilsList = [];
+let lists = [];
+let filterDatas = [];
+
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(datas) {
   const recipesSection = document.getElementById("recipes");
@@ -14,8 +21,6 @@ function displayRecipes(datas) {
   });
 }
 
-// une fonction pour chaque création de liste ?
-let ingredientsList = [];
 // création liste ingrédients via la recipeFactory
 function createListIngredients(datas) {
   let ingredientsListBrut = [];
@@ -30,7 +35,6 @@ function createListIngredients(datas) {
   return ingredientsList;
 }
 
-let appliancesList = [];
 // création liste appareils via la recipeFactory
 function createListAppliances(datas) {
   let applianceListBrut = [];
@@ -45,7 +49,6 @@ function createListAppliances(datas) {
   return appliancesList;
 }
 
-let ustensilsList = [];
 // création liste ustensiles via la recipeFactory
 function createListUstensils(datas) {
   let ustensilsListBrut = [];
@@ -60,7 +63,6 @@ function createListUstensils(datas) {
   return ustensilsList;
 }
 
-let lists = [];
 function groupLists() {
   lists = [
     { Ingrédients: ingredientsList },
@@ -85,7 +87,7 @@ init();
 //------------------------------------------------------------------------------------------
 //création et affichage des filtres via la filterFactory
 function displayFilter(lists) {
-  const filtersSection = document.getElementById("filters");
+  const filtersSection = document.getElementById("filters_buttons");
   lists.forEach((list) => {
     let filterModel = filterFactory(list);
     const filterCardDOM = filterModel.getFilterCardDOM();

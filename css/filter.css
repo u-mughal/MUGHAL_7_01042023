@@ -1,11 +1,43 @@
 #filters {
   display: flex;
+  flex-direction: column;
+}
+
+#filters_buttons {
+  display: flex;
   gap: 20px;
 }
 
+#filters_tags {
+  display: flex;
+  gap: 20px;
+}
+
+.filters_tags_active {
+  padding-top: 20px;
+}
+
+.filter_tag_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 37px;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+.filter_tag_p {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.fa-times-circle {
+  color: white;
+  padding-left: 13px;
+}
+
 .filter {
-  /* position: relative; */
-  /* font-weight: bold; */
   padding-top: 20px;
 }
 
@@ -23,9 +55,6 @@
 
 .filter_btn,
 .filter_list {
-  /* position: absolute;
-  top: -25px;
-  left: 80px; */
   color: white;
   border-radius: 5px;
 }
@@ -39,19 +68,22 @@
 
 #filter_btn_ingredient,
 #input_ingredient,
-#filter_list_ingredient {
+#filter_list_ingredient,
+.color_tag_ingredient {
   background-color: #3282f7;
 }
 
 #filter_btn_appareil,
 #input_appareil,
-#filter_list_appareil {
+#filter_list_appareil,
+.color_tag_appareil {
   background-color: #68d9a4;
 }
 
 #filter_btn_ustensile,
 #input_ustensile,
-#filter_list_ustensile {
+#filter_list_ustensile,
+.color_tag_ustensile {
   background-color: #ed6454;
 }
 
@@ -71,8 +103,6 @@
 
 .filter_input::placeholder {
   color: #ffffffa6;
-  /* font-family: "Lato"; */
-  /* font-size: 18px; */
   font-weight: bolder;
 }
 
