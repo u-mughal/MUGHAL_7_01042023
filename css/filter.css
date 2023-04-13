@@ -18,6 +18,7 @@
   text-align: left;
   border: none;
   cursor: pointer;
+  position: relative;
 }
 
 .filter_btn,
@@ -33,20 +34,24 @@
   display: none;
   cursor: pointer;
   z-index: 1;
+  position: relative;
 }
 
 #filter_btn_ingredient,
-#input_ingredient {
+#input_ingredient,
+#filter_list_ingredient {
   background-color: #3282f7;
 }
 
 #filter_btn_appareil,
-#input_appareil {
+#input_appareil,
+#filter_list_appareil {
   background-color: #68d9a4;
 }
 
 #filter_btn_ustensile,
-#input_ustensile {
+#input_ustensile,
+#filter_list_ustensile {
   background-color: #ed6454;
 }
 
@@ -60,6 +65,10 @@
   font-size: 18px;
 }
 
+.filter_input_active {
+  border-radius: 5px 5px 0 0;
+}
+
 .filter_input::placeholder {
   color: #ffffffa6;
   /* font-family: "Lato"; */
@@ -71,14 +80,29 @@
   outline: none;
 }
 
-.fa-chevron-down {
-  position: relative;
-  left: 20px;
-  top: 2px;
+.filter_chevron_up {
+  position: absolute;
+  right: 15px;
+  top: 22px;
 }
 
-.fa-chevron-up {
-  position: relative;
-  top: 1px;
-  right: 40px;
+.filter_close {
+  position: absolute;
+  top: 22px;
+  right: 15px;
+}
+
+.list_option {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: 70px;
+  row-gap: 10px;
+  position: absolute;
+  height: 397px;
+  width: 667px;
+  background: black;
+  padding: 0 16px 19px;
+  border-radius: 0 0 5px 5px;
+  overflow: hidden;
 }

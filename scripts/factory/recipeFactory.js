@@ -114,15 +114,5 @@ export function recipeFactory(data) {
     return ustensils;
   }
 
-  // function getList(option) {
-  //   const list = [];
-  //   if (option == ingredients) {
-  //     ingredients.forEach((ingredient) => {
-  //       console.log(ingredient["ingredient"]);
-  //       list.push(ingredient["ingredient"]);
-  //     });
-  //   }
-  // }
-
   return { getRecipeCardDOM, getIngredients, getAppliances, getUstensiles };
 }

@@ -14,6 +14,73 @@ function displayRecipes(datas) {
   });
 }
 
+// une fonction pour chaque création de liste ?
+let ingredientsList = [];
+// création liste ingrédients via la recipeFactory
+function createListIngredients(datas) {
+  const liSection = document.getElementById("filter_list_ingredient");
+  let ingredientsListBrut = [];
+
+  datas.forEach((data) => {
+    let listeModel = recipeFactory(data);
+    const ingredients = listeModel.getIngredients();
+    ingredientsListBrut.push(...ingredients);
+
+    ingredients.forEach((ingredient) => {
+      const liFilter = document.createElement("li");
+      liFilter.classList.add("filter_li");
+      liFilter.textContent = ingredient;
+      liSection.appendChild(liFilter);
+    });
+  });
+  ingredientsListBrut.sort();
+  ingredientsList = [...new Set(ingredientsListBrut)];
+
+  return ingredientsList;
+}
+
+let appliancesList = [];
+// création liste appareils via la recipeFactory
+function createListAppliances(datas) {
+  let applianceListBrut = [];
+  datas.forEach((data) => {
+    let listeModel = recipeFactory(data);
+    const appliances = listeModel.getAppliances();
+    applianceListBrut.push(appliances);
+  });
+  applianceListBrut.sort();
+  appliancesList = [...new Set(applianceListBrut)];
+
+  return appliancesList;
+}
+
+let ustensilsList = [];
+// création liste ustensiles via la recipeFactory
+function createListUstensils(datas) {
+  let ustensilsListBrut = [];
+  datas.forEach((data) => {
+    let listeModel = recipeFactory(data);
+    const ustensils = listeModel.getUstensiles();
+    ustensilsListBrut.push(...ustensils);
+  });
+  ustensilsListBrut.sort();
+  ustensilsList = [...new Set(ustensilsListBrut)];
+
+  return ustensilsList;
+}
+
+async function init() {
+  const datas = await getRecipes();
+  displayRecipes(datas);
+  displayFilter(filterOptions);
+  createListIngredients(datas);
+  createListAppliances(datas);
+  createListUstensils(datas);
+}
+
+init();
+
+//------------------------------------------------------------------------------------------
 const filterOptions = ["Ingrédients", "Appareils", "Ustensiles"];
 //création et affichage des filtres via la filterFactory
 function displayFilter(filterOptions) {
@@ -25,58 +92,6 @@ function displayFilter(filterOptions) {
     filtersSection.appendChild(filterCardDOM);
   });
 }
-
-let filterOptionList = [];
-// création liste ingrédients via la recipeFactory
-// une fonction pour 3 listes ? paramètre obj recette pas info option filtre
-function createFilterOptionList(datas) {
-  let filterOptionListBrut = [];
-  datas.forEach((data) => {
-    let listeModel = recipeFactory(data);
-    if (filterOptions == "Ingrédients") {
-      const ingredients = listeModel.getIngredients();
-      filterOptionListBrut.push(...ingredients);
-    }
-    if (filterOptions == "Appareils") {
-      const appliances = listeModel.getAppliances();
-      filterOptionListBrut.push(appliances);
-    }
-    if (filterOptions == "Ustensiles") {
-      const ustensils = listeModel.getUstensiles();
-      filterOptionListBrut.push(...ustensils);
-    }
-  });
-  filterOptionListBrut.sort();
-  filterOptionList = [...new Set(filterOptionListBrut)];
-
-  return filterOptionList;
-}
-
-// rempli la liste des filtres selon option tri sélectionné
-function filledListFilter() {}
-
-// function pour remplir les li avec ou sans saisie
-function displayFilterList(keyword = null) {
-  // if (keyword) {
-  //   let filterModel = recipeFactory(keyword);
-  //   const filterList = filterModel.getList();
-  //   console.log(filterList);
-  // } else {
-  // }
-}
-
-//
-
-async function init() {
-  const datas = await getRecipes();
-  displayRecipes(datas);
-  displayFilter(filterOptions);
-  // createListIngredients(datas);
-  // createListAppliances(datas);
-  // createListUstensils(datas);
-}
-
-init();
 
 //------------------------------------------------------------------------------------------
 // Event Listener
@@ -101,48 +116,29 @@ searchBar.addEventListener("keyup", (e) => {
 // loqigue tri : dans un nvo tableau prend la 1ere variable et une seconde
 
 //------------------------------------------------------------------------------------------
-// une fonction pour chaque création de liste ?
-// let ingredientsList = [];
+
+// let filterOptionList = [];
 // // création liste ingrédients via la recipeFactory
-// function createListIngredients(datas) {
-//   let ingredientsListBrut = [];
+// // une fonction pour 3 listes ? paramètre obj recette pas info option filtre
+// function createFilterOptionList(datas) {
+//   let filterOptionListBrut = [];
 //   datas.forEach((data) => {
 //     let listeModel = recipeFactory(data);
-//     const ingredients = listeModel.getIngredients();
-//     ingredientsListBrut.push(...ingredients);
+//     if (filterOptions == "Ingrédients") {
+//       const ingredients = listeModel.getIngredients();
+//       filterOptionListBrut.push(...ingredients);
+//     }
+//     if (filterOptions == "Appareils") {
+//       const appliances = listeModel.getAppliances();
+//       filterOptionListBrut.push(appliances);
+//     }
+//     if (filterOptions == "Ustensiles") {
+//       const ustensils = listeModel.getUstensiles();
+//       filterOptionListBrut.push(...ustensils);
+//     }
 //   });
-//   ingredientsListBrut.sort();
-//   ingredientsList = [...new Set(ingredientsListBrut)];
+//   filterOptionListBrut.sort();
+//   filterOptionList = [...new Set(filterOptionListBrut)];
 
-//   return ingredientsList;
-// }
-
-// let appliancesList = [];
-// // création liste appareils via la recipeFactory
-// function createListAppliances(datas) {
-//   let applianceListBrut = [];
-//   datas.forEach((data) => {
-//     let listeModel = recipeFactory(data);
-//     const appliances = listeModel.getAppliances();
-//     applianceListBrut.push(appliances);
-//   });
-//   applianceListBrut.sort();
-//   appliancesList = [...new Set(applianceListBrut)];
-
-//   return appliancesList;
-// }
-
-// let ustensilsList = [];
-// // création liste ustensiles via la recipeFactory
-// function createListUstensils(datas) {
-//   let ustensilsListBrut = [];
-//   datas.forEach((data) => {
-//     let listeModel = recipeFactory(data);
-//     const ustensils = listeModel.getUstensiles();
-//     ustensilsListBrut.push(...ustensils);
-//   });
-//   ustensilsListBrut.sort();
-//   ustensilsList = [...new Set(ustensilsListBrut)];
-//   console.log(ustensilsList);
-//   return ustensilsList;
+//   return filterOptionList;
 // }
