@@ -1,6 +1,9 @@
 export function filterFactory(data) {
   const option = data;
-  const optionLowerCase = option.toLowerCase();
+  const optionKey = Object.keys(option);
+  // console.log("lg4", optionKey);
+  const optionName = optionKey.toString();
+  const optionLowerCase = optionName.toLowerCase();
   let optionSingular;
   if (optionLowerCase.endsWith("s")) {
     optionSingular = optionLowerCase.slice(0, -1);
@@ -9,6 +12,9 @@ export function filterFactory(data) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
   const selectedFilter = optionWithoutAccent;
+  const optionValue = Object.values(option);
+  const optionArray = optionValue[0];
+  // console.log("lg16", typeof optionArray, optionArray);
 
   // renvoi l'élément HTML d'un filtre
   function getFilterCardDOM() {
@@ -26,7 +32,7 @@ export function filterFactory(data) {
     filter.appendChild(btn);
 
     const btnName = document.createElement("span");
-    btnName.textContent = `${option}`;
+    btnName.textContent = `${optionName}`;
     btn.appendChild(btnName);
 
     const btnChevron = document.createElement("span");
@@ -99,13 +105,24 @@ export function filterFactory(data) {
 
   // rempli la liste des filtres selon option tri sélectionné
   // function pour remplir les li avec ou sans saisie
-  // ici on a l'option filtre mais pas le tableau/liste
   function filledListFilter(keyword = null) {
+    const liSection = document.getElementById(`filter_list_${selectedFilter}`);
+
     if (keyword) {
       console.log(keyword, selectedFilter);
     } else {
-      console.log(selectedFilter);
+      optionArray.forEach((elt) => {
+        const liFilter = document.createElement("li");
+        liFilter.classList.add("filter_li");
+        liFilter.textContent = elt;
+        liFilter.addEventListener("click", (e) => filterByKeyword(e));
+        liSection.appendChild(liFilter);
+      });
     }
+  }
+
+  function filterByKeyword(e) {
+    console.log("selected keyword", e.target.innerText);
   }
 
   return { getFilterCardDOM };

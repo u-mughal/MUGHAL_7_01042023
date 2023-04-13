@@ -6,7 +6,7 @@ import { searchRecipe } from "./utils/searchBar.js";
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(datas) {
   const recipesSection = document.getElementById("recipes");
-
+  console.log(datas);
   datas.forEach((data) => {
     let recipeModel = recipeFactory(data);
     const recipeCardDOM = recipeModel.getRecipeCardDOM();
@@ -18,20 +18,11 @@ function displayRecipes(datas) {
 let ingredientsList = [];
 // création liste ingrédients via la recipeFactory
 function createListIngredients(datas) {
-  const liSection = document.getElementById("filter_list_ingredient");
   let ingredientsListBrut = [];
-
   datas.forEach((data) => {
     let listeModel = recipeFactory(data);
     const ingredients = listeModel.getIngredients();
     ingredientsListBrut.push(...ingredients);
-
-    ingredients.forEach((ingredient) => {
-      const liFilter = document.createElement("li");
-      liFilter.classList.add("filter_li");
-      liFilter.textContent = ingredient;
-      liSection.appendChild(liFilter);
-    });
   });
   ingredientsListBrut.sort();
   ingredientsList = [...new Set(ingredientsListBrut)];
@@ -69,25 +60,34 @@ function createListUstensils(datas) {
   return ustensilsList;
 }
 
+let lists = [];
+function groupLists() {
+  lists = [
+    { Ingrédients: ingredientsList },
+    { Appareils: appliancesList },
+    { Ustensiles: ustensilsList },
+  ];
+  console.log(lists);
+}
+
 async function init() {
   const datas = await getRecipes();
   displayRecipes(datas);
-  displayFilter(filterOptions);
   createListIngredients(datas);
   createListAppliances(datas);
   createListUstensils(datas);
+  groupLists();
+  displayFilter(lists);
 }
 
 init();
 
 //------------------------------------------------------------------------------------------
-const filterOptions = ["Ingrédients", "Appareils", "Ustensiles"];
 //création et affichage des filtres via la filterFactory
-function displayFilter(filterOptions) {
+function displayFilter(lists) {
   const filtersSection = document.getElementById("filters");
-
-  filterOptions.forEach((option) => {
-    let filterModel = filterFactory(option);
+  lists.forEach((list) => {
+    let filterModel = filterFactory(list);
     const filterCardDOM = filterModel.getFilterCardDOM();
     filtersSection.appendChild(filterCardDOM);
   });
