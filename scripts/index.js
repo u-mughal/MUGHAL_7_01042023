@@ -16,7 +16,7 @@ function displayRecipes(datas) {
   console.log(datas);
   datas.forEach((data) => {
     let recipeModel = recipeFactory(data);
-    const recipeCardDOM = recipeModel.getRecipeCardDOM();
+    const recipeCardDOM = recipeModel.getRecipeCard();
     recipesSection.appendChild(recipeCardDOM);
   });
 }
@@ -98,11 +98,17 @@ function displayFilter(lists) {
 //------------------------------------------------------------------------------------------
 // Event Listener
 const searchBar = document.querySelector("#search_recipe");
-searchBar.addEventListener("keyup", (e) => {
+searchBar.addEventListener("input", (e) => {
   const value = e.target.value;
-  const regex = /[A-Za-z0-9]{3,}/;
-  if (regex.test(value)) {
-    searchRecipe(value);
+  const regexZeroCaracters = /^$/;
+  const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/;
+  const regexThreeCaracters = /[A-Za-z0-9]{3,}/;
+  if (regexThreeCaracters.test(value)) {
+    searchRecipe(e.target.value);
+  } else if (regexZeroCaracters.test(value)) {
+    searchRecipe();
+  } else if (regexOneOrTwoCaracters.test(value)) {
+    null;
   }
 });
 

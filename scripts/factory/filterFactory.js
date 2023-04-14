@@ -166,6 +166,8 @@ export function filterFactory(data) {
     tagIcon.addEventListener("click", (e) => deleteTag(e));
     tagDiv.appendChild(tagIcon);
 
+    const filterInput = document.getElementById(`input_${selectedFilter}`);
+    filterInput.value = "";
     const filterList = document.getElementById(`filter_by_${selectedFilter}`);
     filterList.style.display = "none";
     const filterButton = document.getElementById(
