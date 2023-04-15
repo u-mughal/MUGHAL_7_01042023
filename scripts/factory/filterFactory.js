@@ -15,7 +15,7 @@ export function filterFactory(data) {
   const optionArray = optionValue[0];
 
   // renvoi l'élément HTML d'un filtre
-  function getFilterCardDOM() {
+  function getFilterCard() {
     const filter = document.createElement("div");
     filter.setAttribute("id", `filter_${selectedFilter}`);
     filter.classList.add("filter");
@@ -188,5 +188,5 @@ export function filterFactory(data) {
     createTag(e.target.innerText);
   }
 
-  return { getFilterCardDOM };
+  return { getFilterCard };
 }

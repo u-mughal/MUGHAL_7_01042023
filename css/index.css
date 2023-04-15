@@ -3,6 +3,16 @@ header {
   margin-bottom: 20px;
 }
 
+h1 {
+  font-family: "DM Sans";
+  font-weight: 700;
+  color: #d04f4f;
+}
+
+img {
+  width: 60px;
+}
+
 #search {
   margin-bottom: 20px;
 }
@@ -26,7 +36,7 @@ header {
 #search_btn_recipe {
   font-size: 32px;
   position: absolute;
-  top: 130px;
+  top: 170px;
   right: 65px;
   border: none;
   background-color: #e7e7e7;
@@ -36,8 +46,9 @@ header {
 #recipes {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   row-gap: 50px;
+  column-gap: 5%;
 }
 
 /* RECIPE CARD */
@@ -70,6 +81,7 @@ header {
 .recipe_header {
   display: flex;
   justify-content: space-between;
+  text-align: start;
 }
 
 .recipe_header h3 {
