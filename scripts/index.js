@@ -102,9 +102,7 @@ searchBar.addEventListener("input", (e) => {
   const value = e.target.value;
   const regexThreeCaracters = /[A-Za-z0-9]{3,}/;
   if (regexThreeCaracters.test(value)) {
-    filterDatas(e.target.value, datas);
-    filteredDatas = filterDatas(e.target.value, datas);
-    displayRecipes(filteredDatas);
+    displayRecipes(filterDatas(e.target.value, datas));
   }
 });
 
