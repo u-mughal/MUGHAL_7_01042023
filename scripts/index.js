@@ -13,6 +13,7 @@ let filteredDatas = [];
 
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(datas) {
+  sortDatas(datas);
   const recipesSection = document.getElementById("recipes");
   recipesSection.innerHTML = "";
   datas.forEach((data) => {
@@ -20,6 +21,21 @@ function displayRecipes(datas) {
     const recipeCardDOM = recipeModel.getRecipeCard();
     recipesSection.appendChild(recipeCardDOM);
   });
+}
+
+function sortDatas(datas) {
+  datas.sort(function (a, b) {
+    let x = a.name.toLowerCase();
+    let y = b.name.toLowerCase();
+    if (x > y) {
+      return 1;
+    }
+    if (x < y) {
+      return -1;
+    }
+    return 0;
+  });
+  return datas;
 }
 
 // création liste ingrédients via la recipeFactory
@@ -101,8 +117,19 @@ const searchBar = document.querySelector("#search_recipe");
 searchBar.addEventListener("input", (e) => {
   const value = e.target.value;
   const regexThreeCaracters = /[A-Za-z0-9]{3,}/;
+  const recipesSection = document.getElementById("recipes");
   if (regexThreeCaracters.test(value)) {
-    displayRecipes(filterDatas(e.target.value, datas));
+    filteredDatas = filterDatas(e.target.value, datas);
+    displayRecipes(filteredDatas);
+    if (filteredDatas.length === 0) {
+      recipesSection.innerHTML = "Votre recherche n'a pas de correspondance.";
+      recipesSection.classList.add("empty");
+    } else {
+      recipesSection.classList.remove("empty");
+    }
+  } else {
+    displayRecipes(datas);
+    recipesSection.classList.remove("empty");
   }
 });
 

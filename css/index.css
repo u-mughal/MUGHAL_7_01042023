@@ -51,6 +51,12 @@ img {
   column-gap: 5%;
 }
 
+.empty {
+  font-size: 24px;
+  justify-content: center !important;
+  padding-top: 200px;
+}
+
 /* RECIPE CARD */
 .recipe_card {
   flex-basis: 30%;
@@ -84,7 +90,8 @@ img {
   text-align: start;
 }
 
-.recipe_header h3 {
+.recipe_header h2 {
+  font-size: 18px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -129,8 +136,8 @@ img {
 }
 
 .recipe_description_text {
+  font-family: "roboto";
   height: 98px;
-  /* white-space: nowrap; */
   overflow: hidden;
   text-overflow: ellipsis;
 }
