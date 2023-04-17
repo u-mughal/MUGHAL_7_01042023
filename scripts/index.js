@@ -1,19 +1,20 @@
 import { getRecipes } from "./api/services.js";
 import { recipeFactory } from "./factory/recipeFactory.js";
 import { filterFactory } from "./factory/filterFactory.js";
-import { searchRecipe } from "./utils/searchBar.js";
+import { filterDatas } from "./utils/searchBar.js";
 
 // déclaration variables
+let datas = [];
 let ingredientsList = [];
 let appliancesList = [];
 let ustensilsList = [];
 let lists = [];
-let filterDatas = [];
+let filteredDatas = [];
 
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(datas) {
   const recipesSection = document.getElementById("recipes");
-  console.log(datas);
+  recipesSection.innerHTML = "";
   datas.forEach((data) => {
     let recipeModel = recipeFactory(data);
     const recipeCardDOM = recipeModel.getRecipeCard();
@@ -69,11 +70,10 @@ function groupLists() {
     { Appareils: appliancesList },
     { Ustensiles: ustensilsList },
   ];
-  console.log(lists);
 }
 
 async function init() {
-  const datas = await getRecipes();
+  datas = await getRecipes();
   displayRecipes(datas);
   createListIngredients(datas);
   createListAppliances(datas);
@@ -90,7 +90,7 @@ function displayFilter(lists) {
   const filtersSection = document.getElementById("filters_buttons");
   lists.forEach((list) => {
     let filterModel = filterFactory(list);
-    const filterCardDOM = filterModel.getFilterCardDOM();
+    const filterCardDOM = filterModel.getFilterCard();
     filtersSection.appendChild(filterCardDOM);
   });
 }
@@ -100,15 +100,11 @@ function displayFilter(lists) {
 const searchBar = document.querySelector("#search_recipe");
 searchBar.addEventListener("input", (e) => {
   const value = e.target.value;
-  const regexZeroCaracters = /^$/;
-  const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/;
   const regexThreeCaracters = /[A-Za-z0-9]{3,}/;
   if (regexThreeCaracters.test(value)) {
-    searchRecipe(e.target.value);
-  } else if (regexZeroCaracters.test(value)) {
-    searchRecipe();
-  } else if (regexOneOrTwoCaracters.test(value)) {
-    null;
+    filterDatas(e.target.value, datas);
+    filteredDatas = filterDatas(e.target.value, datas);
+    displayRecipes(filteredDatas);
   }
 });
 
