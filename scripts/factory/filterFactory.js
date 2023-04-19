@@ -188,5 +188,5 @@ export function filterFactory(data) {
     createTag(e.target.innerText);
   }
 
-  return { getFilterCardDOM };
+  return { getFilterCardDOM, filterByTag};
 }

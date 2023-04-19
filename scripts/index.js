@@ -18,7 +18,7 @@ function displayRecipes(datas) {
   recipesSection.innerHTML = "";
   datas.forEach((data) => {
     let recipeModel = recipeFactory(data);
-    const recipeCardDOM = recipeModel.getRecipeCardDOM();
+    const recipeCardDOM = recipeModel.getRecipeCard();
     recipesSection.appendChild(recipeCardDOM);
   });
 }
