@@ -35,6 +35,7 @@
 .fa-times-circle {
   color: white;
   padding-left: 13px;
+  cursor: pointer;
 }
 
 .filter {

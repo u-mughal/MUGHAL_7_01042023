@@ -73,13 +73,17 @@ function groupLists() {
   ];
 }
 
-async function init() {
-  datas = await getRecipes();
-  displayRecipes(datas);
+function listInit(datas) {
   createListIngredients(datas);
   createListAppliances(datas);
   createListUstensils(datas);
   groupLists();
+}
+
+async function init() {
+  datas = await getRecipes();
+  displayRecipes(datas);
+  listInit(datas);
   displayFilter(lists);
 }
 
@@ -89,12 +93,38 @@ init();
 //création et affichage des filtres via la filterFactory
 function displayFilter(lists) {
   const filtersSection = document.getElementById("filters_buttons");
+  filtersSection.innerHTML = "";
   lists.forEach((list) => {
     let filterModel = filterFactory(list);
     const filterCardDOM = filterModel.getFilterCardDOM();
     filtersSection.appendChild(filterCardDOM);
   });
 }
+
+function removeKeywordFromList(value, lists) {
+  const eFormated = value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  const regex = new RegExp(eFormated);
+  lists.forEach((list) =>
+    Object.values(list).forEach((eList) => {
+      eList.find((e, index) => {
+        console.log(e.value);
+        let indexUtd = index;
+        if (regex.test(e)) {
+          eList.splice(indexUtd, 1);
+          indexUtd--;
+        }
+      });
+    })
+  );
+  return lists;
+}
+// const k = Object.keys(list);
+// console.log(typeof k, k);
+// list = eList.filter((e) => !regex.test(e));
+// console.log(lists.k);
 
 //------------------------------------------------------------------------------------------
 // Event Listener
@@ -106,6 +136,9 @@ searchBar.addEventListener("input", (e) => {
   if (regexThreeCaracters.test(value)) {
     filteredDatas = filterDatas(e.target.value, datas);
     displayRecipes(filteredDatas);
+    listInit(filteredDatas);
+    removeKeywordFromList(value, lists);
+    displayFilter(lists);
     if (filteredDatas.length === 0) {
       recipesSection.innerHTML = "Votre recherche n'a pas de correspondance.";
       recipesSection.classList.add("empty");
@@ -114,6 +147,8 @@ searchBar.addEventListener("input", (e) => {
     }
   } else {
     displayRecipes(datas);
+    listInit(datas);
+    displayFilter(lists);
     recipesSection.classList.remove("empty");
   }
 });

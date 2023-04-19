@@ -131,7 +131,9 @@ export function filterFactory(data) {
         liFilter.classList.add("filter_li");
         const eltFormated = majFirstLetter(elt);
         liFilter.textContent = eltFormated;
-        liFilter.addEventListener("click", (e) => filterByTag(e));
+        liFilter.addEventListener("click", (e) =>
+          filterByTag(e, matchKeywords)
+        );
         liSection.appendChild(liFilter);
       });
     } else {
@@ -188,5 +190,5 @@ export function filterFactory(data) {
     createTag(e.target.innerText);
   }
 
-  return { getFilterCardDOM, filterByTag};
+  return { getFilterCardDOM };
 }
