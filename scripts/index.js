@@ -1,7 +1,7 @@
 import { getRecipes } from "./api/services.js";
 import { recipeFactory } from "./factory/recipeFactory.js";
 import { filterFactory } from "./factory/filterFactory.js";
-import { filterDatas } from "./utils/searchBar.js";
+import { filterDatas, sortDatas } from "./utils/searchBar.js";
 
 // déclaration variables
 let datas = [];
@@ -18,24 +18,9 @@ function displayRecipes(datas) {
   recipesSection.innerHTML = "";
   datas.forEach((data) => {
     let recipeModel = recipeFactory(data);
-    const recipeCardDOM = recipeModel.getRecipeCard();
+    const recipeCardDOM = recipeModel.getRecipeCardDOM();
     recipesSection.appendChild(recipeCardDOM);
   });
-}
-
-function sortDatas(datas) {
-  datas.sort(function (a, b) {
-    let x = a.name.toLowerCase();
-    let y = b.name.toLowerCase();
-    if (x > y) {
-      return 1;
-    }
-    if (x < y) {
-      return -1;
-    }
-    return 0;
-  });
-  return datas;
 }
 
 // création liste ingrédients via la recipeFactory
@@ -106,7 +91,7 @@ function displayFilter(lists) {
   const filtersSection = document.getElementById("filters_buttons");
   lists.forEach((list) => {
     let filterModel = filterFactory(list);
-    const filterCardDOM = filterModel.getFilterCard();
+    const filterCardDOM = filterModel.getFilterCardDOM();
     filtersSection.appendChild(filterCardDOM);
   });
 }
@@ -132,16 +117,3 @@ searchBar.addEventListener("input", (e) => {
     recipesSection.classList.remove("empty");
   }
 });
-
-//------------------------------------------------------------------------------------------
-// manipule 4 listes : recettes, ingrédients, appareils, ustensiles
-// 4 arrays
-// selon les filtres on va reconstruire ces tableaux
-// ces tableaux seront envoyés aux fonctions qui affiche les recettes, le contenu du filtre
-// array.filter reconstruit le tableau
-// return operation ternaire
-
-// boucle en 1er
-// loqigue tri : dans un nvo tableau prend la 1ere variable et une seconde
-
-//------------------------------------------------------------------------------------------

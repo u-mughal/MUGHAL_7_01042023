@@ -42,7 +42,7 @@ export function filterDatas(value, datas) {
   return filteredDatas;
 }
 
-function sortDatas(filteredDatas) {
+export function sortDatas(filteredDatas) {
   filteredDatas.sort(function (a, b) {
     let x = a.name.toLowerCase();
     let y = b.name.toLowerCase();

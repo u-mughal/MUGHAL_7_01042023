@@ -15,7 +15,7 @@ export function filterFactory(data) {
   const optionArray = optionValue[0];
 
   // renvoi l'élément HTML d'un filtre
-  function getFilterCard() {
+  function getFilterCardDOM() {
     const filter = document.createElement("div");
     filter.setAttribute("id", `filter_${selectedFilter}`);
     filter.classList.add("filter");
@@ -131,7 +131,7 @@ export function filterFactory(data) {
         liFilter.classList.add("filter_li");
         const eltFormated = majFirstLetter(elt);
         liFilter.textContent = eltFormated;
-        liFilter.addEventListener("click", (e) => filterByKeyword(e));
+        liFilter.addEventListener("click", (e) => filterByTag(e));
         liSection.appendChild(liFilter);
       });
     } else {
@@ -141,7 +141,7 @@ export function filterFactory(data) {
         liFilter.classList.add("filter_li");
         const eltFormated = majFirstLetter(elt);
         liFilter.textContent = eltFormated;
-        liFilter.addEventListener("click", (e) => filterByKeyword(e));
+        liFilter.addEventListener("click", (e) => filterByTag(e));
         liSection.appendChild(liFilter);
       });
     }
@@ -184,9 +184,9 @@ export function filterFactory(data) {
     }
   }
 
-  function filterByKeyword(e) {
+  function filterByTag(e) {
     createTag(e.target.innerText);
   }
 
-  return { getFilterCard };
+  return { getFilterCardDOM };
 }
