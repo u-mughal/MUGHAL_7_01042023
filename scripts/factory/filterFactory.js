@@ -108,13 +108,23 @@ export function filterFactory(data) {
     }
   }
 
-  function majFirstLetter(elt) {
-    return (elt + "").charAt(0).toUpperCase() + elt.substr(1);
+  // création de l'élément HTML d'une liste de filtre
+  function createFilterListElt(options) {
+    const liSection = document.getElementById(`filter_list_${selectedFilter}`);
+    options.forEach((elt) => {
+      const liFilter = document.createElement("li");
+      liFilter.classList.add("filter_li");
+      const eltFormated = (elt + "").charAt(0).toUpperCase() + elt.substr(1);
+      liFilter.textContent = eltFormated;
+      // liFilter.addEventListener("click", (e) => handleTag(e));
+      liSection.appendChild(liFilter);
+    });
   }
 
   // rempli la liste des filtres selon avec ou sans saisie dans input
   function filledListFilter(keyword = null) {
     const liSection = document.getElementById(`filter_list_${selectedFilter}`);
+    liSection.innerHTML = "";
     if (keyword) {
       const keywordFormated = keyword
         .toLowerCase()
@@ -125,70 +135,98 @@ export function filterFactory(data) {
         const oFormated = o.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         return regex.test(oFormated);
       });
-      liSection.innerHTML = "";
-      matchKeywords.forEach((elt) => {
-        const liFilter = document.createElement("li");
-        liFilter.classList.add("filter_li");
-        const eltFormated = majFirstLetter(elt);
-        liFilter.textContent = eltFormated;
-        liFilter.addEventListener("click", (e) =>
-          filterByTag(e, matchKeywords)
-        );
-        liSection.appendChild(liFilter);
-      });
+      createFilterListElt(matchKeywords);
     } else {
-      liSection.innerHTML = "";
-      optionArray.forEach((elt) => {
-        const liFilter = document.createElement("li");
-        liFilter.classList.add("filter_li");
-        const eltFormated = majFirstLetter(elt);
-        liFilter.textContent = eltFormated;
-        liFilter.addEventListener("click", (e) => filterByTag(e));
-        liSection.appendChild(liFilter);
-      });
+      const inputSearchBar = document.getElementById("search_recipe");
+      if (inputSearchBar.className === "active") {
+        const searchValue = inputSearchBar.value;
+        const newOptionArray = optionArray.filter(
+          (option) => !option.toString().includes(searchValue)
+        );
+        createFilterListElt(newOptionArray);
+      } else {
+        createFilterListElt(optionArray);
+      }
     }
   }
 
-  function createTag(e) {
-    const filterTag = document.getElementById("filters_tags");
-    filterTag.classList.add("filters_tags_active");
-
-    const tagDiv = document.createElement("div");
-    tagDiv.classList.add("filter_tag_div");
-    tagDiv.classList.add(`color_tag_${selectedFilter}`);
-    filterTag.appendChild(tagDiv);
-
-    const tag = document.createElement("p");
-    tag.classList.add("filter_tag_p");
-    tag.textContent = e;
-    tagDiv.appendChild(tag);
-
-    const tagIcon = document.createElement("i");
-    tagIcon.classList.add("far", "fa-times-circle");
-    tagIcon.addEventListener("click", (e) => deleteTag(e));
-    tagDiv.appendChild(tagIcon);
-
-    const filterInput = document.getElementById(`input_${selectedFilter}`);
-    filterInput.value = "";
-    const filterList = document.getElementById(`filter_by_${selectedFilter}`);
-    filterList.style.display = "none";
-    const filterButton = document.getElementById(
-      `filter_btn_${selectedFilter}`
-    );
-    filterButton.style.display = "block";
+  function getSelectedFilter() {
+    return selectedFilter;
   }
 
-  function deleteTag(e) {
-    e.target.parentElement.remove();
-    const tagDiv = document.getElementById("filters_tags");
-    if (tagDiv.innerHTML === "") {
-      tagDiv.classList.remove("filters_tags_active");
-    }
-  }
+  // // création de l'élément HTML d'un tag
+  // function createTag(e) {
+  //   const filterTag = document.getElementById("filters_tags");
+  //   filterTag.classList.add("filters_tags_active");
 
-  function filterByTag(e) {
-    createTag(e.target.innerText);
-  }
+  //   const tagDiv = document.createElement("div");
+  //   tagDiv.classList.add("filter_tag_div");
+  //   tagDiv.classList.add(`color_tag_${selectedFilter}`);
+  //   filterTag.appendChild(tagDiv);
 
-  return { getFilterCardDOM };
+  //   const tag = document.createElement("p");
+  //   tag.classList.add("filter_tag_p");
+  //   tag.textContent = e;
+  //   tagDiv.appendChild(tag);
+
+  //   const tagIcon = document.createElement("i");
+  //   tagIcon.classList.add("far", "fa-times-circle");
+  //   tagIcon.addEventListener("click", (e) => deleteTag(e));
+  //   tagDiv.appendChild(tagIcon);
+
+  //   const filterInput = document.getElementById(`input_${selectedFilter}`);
+  //   filterInput.value = "";
+  //   const filterList = document.getElementById(`filter_by_${selectedFilter}`);
+  //   filterList.style.display = "none";
+  //   const filterButton = document.getElementById(
+  //     `filter_btn_${selectedFilter}`
+  //   );
+  //   filterButton.style.display = "block";
+  // }
+
+  // function deleteTag(e) {
+  //   e.target.parentElement.remove();
+  //   const tagDiv = document.getElementById("filters_tags");
+  //   if (tagDiv.innerHTML === "") {
+  //     tagDiv.classList.remove("filters_tags_active");
+  //   }
+  // }
+
+  // function handleTag(e) {
+  //   const inputSearchBar = document.getElementById("search_recipe");
+  //   const tagSection = document.querySelector(".filters_tags_active");
+  //   const tag = e.target.innerText;
+  //   createTag(tag);
+  //   if (inputSearchBar.className === "active") {
+  //     filterDatas(tag, filteredDatas);
+  //     displayRecipe(fileredDatasWithTag);
+  //     filledListFilter(fileredDatasWithTag);
+  //   } else if (inputSearchBar.className === "active" && tagSection) {
+  //     filterDatas(tag, filteredDatas);
+  //   } else {
+  //     filterDatas(tag, filteredDatas);
+  //   }
+  // }
+
+  return { getFilterCardDOM, getSelectedFilter };
 }
+
+// const tagSection = document.querySelector(".filters_tags_active");
+// if (tagSection) {
+//   const tags = document.querySelectorAll(".filter_tag_p");
+//   let tagList = [];
+//   const tagContent = tags.forEach((tag) => tagList.push(tag.textContent));
+//   debugger;
+//   const newOptionArray = optionArray.filter(
+//     (option) => !option.toString().includes(searchValue)
+//   );
+//   console.log(newOptionArray);
+//   liSection.innerHTML = "";
+//   newOptionArray.forEach((elt) => {
+//     const liFilter = document.createElement("li");
+//     liFilter.classList.add("filter_li");
+//     const eltFormated = majFirstLetter(elt);
+//     liFilter.textContent = eltFormated;
+//     liFilter.addEventListener("click", (e) => handleTag(e));
+//     liSection.appendChild(liFilter);
+//   });

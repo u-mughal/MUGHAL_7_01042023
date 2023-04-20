@@ -13,7 +13,9 @@ export function filterDatas(value, datas) {
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .includes(inputFormated) ||
-      data.appliance
+      data.ingredients
+        .map((ingredients) => ingredients.ingredient)
+        .toString()
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
@@ -23,20 +25,17 @@ export function filterDatas(value, datas) {
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .includes(inputFormated) ||
-      data.ustensils.forEach((ustensil) =>
-        ustensil
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .includes(inputFormated)
-      ) ||
-      data.ingredients.forEach((ingredient) =>
-        ingredient.ingredient
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .includes(inputFormated)
-      )
+      data.appliance
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .includes(inputFormated) ||
+      data.ustensils
+        .toString()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .includes(inputFormated)
   );
   sortDatas(filteredDatas);
   return filteredDatas;
