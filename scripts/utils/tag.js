@@ -1,12 +1,11 @@
-import { filterFactory } from "../factory/filterFactory.js";
-import { filterDatas } from "./searchBar.js";
+// import { filterFactory } from "../factory/filterFactory.js";
 
-export function handleTag() {
-  console.log("coucou");
-  let filterModel = filterFactory();
-  const fiterCardDOM = filterModel.getSelectedFilter();
-  console.log(fiterCardDOM);
-}
+// function handleTag() {
+//   console.log("coucou");
+//   let filterModel = filterFactory();
+//   const fiterCardDOM = filterModel.getSelectedFilter();
+//   console.log(fiterCardDOM);
+// }
 
 // function createTag(e) {
 //   const filterTag = document.getElementById("filters_tags");

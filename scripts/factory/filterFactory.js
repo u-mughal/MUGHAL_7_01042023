@@ -116,7 +116,7 @@ export function filterFactory(data) {
       liFilter.classList.add("filter_li");
       const eltFormated = (elt + "").charAt(0).toUpperCase() + elt.substr(1);
       liFilter.textContent = eltFormated;
-      // liFilter.addEventListener("click", (e) => handleTag(e));
+      liFilter.addEventListener("click", (e) => handleTag(e));
       liSection.appendChild(liFilter);
     });
   }
@@ -154,59 +154,60 @@ export function filterFactory(data) {
     return selectedFilter;
   }
 
-  // // création de l'élément HTML d'un tag
-  // function createTag(e) {
-  //   const filterTag = document.getElementById("filters_tags");
-  //   filterTag.classList.add("filters_tags_active");
+  // création de l'élément HTML d'un tag
+  function createTag(e) {
+    const filterTag = document.getElementById("filters_tags");
+    filterTag.classList.add("filters_tags_active");
 
-  //   const tagDiv = document.createElement("div");
-  //   tagDiv.classList.add("filter_tag_div");
-  //   tagDiv.classList.add(`color_tag_${selectedFilter}`);
-  //   filterTag.appendChild(tagDiv);
+    const tagDiv = document.createElement("div");
+    tagDiv.classList.add("filter_tag_div");
+    tagDiv.classList.add(`color_tag_${selectedFilter}`);
+    filterTag.appendChild(tagDiv);
 
-  //   const tag = document.createElement("p");
-  //   tag.classList.add("filter_tag_p");
-  //   tag.textContent = e;
-  //   tagDiv.appendChild(tag);
+    const tag = document.createElement("p");
+    tag.classList.add("filter_tag_p");
+    tag.textContent = e;
+    tagDiv.appendChild(tag);
 
-  //   const tagIcon = document.createElement("i");
-  //   tagIcon.classList.add("far", "fa-times-circle");
-  //   tagIcon.addEventListener("click", (e) => deleteTag(e));
-  //   tagDiv.appendChild(tagIcon);
+    const tagIcon = document.createElement("i");
+    tagIcon.classList.add("far", "fa-times-circle");
+    tagIcon.addEventListener("click", (e) => deleteTag(e));
+    tagDiv.appendChild(tagIcon);
 
-  //   const filterInput = document.getElementById(`input_${selectedFilter}`);
-  //   filterInput.value = "";
-  //   const filterList = document.getElementById(`filter_by_${selectedFilter}`);
-  //   filterList.style.display = "none";
-  //   const filterButton = document.getElementById(
-  //     `filter_btn_${selectedFilter}`
-  //   );
-  //   filterButton.style.display = "block";
-  // }
+    const filterInput = document.getElementById(`input_${selectedFilter}`);
+    filterInput.value = "";
+    const filterList = document.getElementById(`filter_by_${selectedFilter}`);
+    filterList.style.display = "none";
+    const filterButton = document.getElementById(
+      `filter_btn_${selectedFilter}`
+    );
+    filterButton.style.display = "block";
+  }
 
-  // function deleteTag(e) {
-  //   e.target.parentElement.remove();
-  //   const tagDiv = document.getElementById("filters_tags");
-  //   if (tagDiv.innerHTML === "") {
-  //     tagDiv.classList.remove("filters_tags_active");
-  //   }
-  // }
+  function deleteTag(e) {
+    e.target.parentElement.remove();
+    const tagDiv = document.getElementById("filters_tags");
+    if (tagDiv.innerHTML === "") {
+      tagDiv.classList.remove("filters_tags_active");
+    }
+  }
 
-  // function handleTag(e) {
-  //   const inputSearchBar = document.getElementById("search_recipe");
-  //   const tagSection = document.querySelector(".filters_tags_active");
-  //   const tag = e.target.innerText;
-  //   createTag(tag);
-  //   if (inputSearchBar.className === "active") {
-  //     filterDatas(tag, filteredDatas);
-  //     displayRecipe(fileredDatasWithTag);
-  //     filledListFilter(fileredDatasWithTag);
-  //   } else if (inputSearchBar.className === "active" && tagSection) {
-  //     filterDatas(tag, filteredDatas);
-  //   } else {
-  //     filterDatas(tag, filteredDatas);
-  //   }
-  // }
+  function handleTag(e) {
+    const inputSearchBar = document.getElementById("search_recipe");
+    //   const tagSection = document.querySelector(".filters_tags_active");
+    const tag = e.target.innerText;
+    createTag(tag);
+    if (inputSearchBar.className === "active") {
+      filterDatas(tag, filteredDatas);
+      displayRecipe(fileredDatasWithTag);
+      filledListFilter(fileredDatasWithTag);
+    }
+    //   } else if (inputSearchBar.className === "active" && tagSection) {
+    //     filterDatas(tag, filteredDatas);
+    //   } else {
+    //     filterDatas(tag, filteredDatas);
+    //   }
+  }
 
   return { getFilterCardDOM, getSelectedFilter };
 }
