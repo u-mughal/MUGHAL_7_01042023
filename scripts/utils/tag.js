@@ -1,46 +1,44 @@
-// import { filterFactory } from "../factory/filterFactory.js";
+import { filterFactory } from '../factory/filterFactory.js'
 
-// function handleTag() {
-//   console.log("coucou");
-//   let filterModel = filterFactory();
-//   const fiterCardDOM = filterModel.getSelectedFilter();
-//   console.log(fiterCardDOM);
-// }
+export function handleTag() {
+	console.log('coucou')
+	createTag(e)
+}
 
-// function createTag(e) {
-//   const filterTag = document.getElementById("filters_tags");
-//   filterTag.classList.add("filters_tags_active");
+function createTag(e) {
+	const filterTag = document.getElementById('filters_tags')
+	filterTag.classList.add('filters_tags_active')
 
-//   const tagDiv = document.createElement("div");
-//   tagDiv.classList.add("filter_tag_div");
-//   tagDiv.classList.add(`color_tag_${selectedFilter}`);
-//   filterTag.appendChild(tagDiv);
+	const tagDiv = document.createElement('div')
+	tagDiv.classList.add('filter_tag_div')
+	tagDiv.classList.add(`color_tag_${selectedFilter}`)
+	filterTag.appendChild(tagDiv)
 
-//   const tag = document.createElement("p");
-//   tag.classList.add("filter_tag_p");
-//   tag.textContent = e;
-//   tagDiv.appendChild(tag);
+	const tag = document.createElement('p')
+	tag.classList.add('filter_tag_p')
+	tag.textContent = e
+	tagDiv.appendChild(tag)
 
-//   const tagIcon = document.createElement("i");
-//   tagIcon.classList.add("far", "fa-times-circle");
-//   tagIcon.addEventListener("click", (e) => deleteTag(e));
-//   tagDiv.appendChild(tagIcon);
+	const tagIcon = document.createElement('i')
+	tagIcon.classList.add('far', 'fa-times-circle')
+	tagIcon.addEventListener('click', (e) => deleteTag(e))
+	tagDiv.appendChild(tagIcon)
 
-//   const filterInput = document.getElementById(`input_${selectedFilter}`);
-//   filterInput.value = "";
-//   const filterList = document.getElementById(`filter_by_${selectedFilter}`);
-//   filterList.style.display = "none";
-//   const filterButton = document.getElementById(`filter_btn_${selectedFilter}`);
-//   filterButton.style.display = "block";
-// }
+	const filterInput = document.getElementById(`input_${selectedFilter}`)
+	filterInput.value = ''
+	const filterList = document.getElementById(`filter_by_${selectedFilter}`)
+	filterList.style.display = 'none'
+	const filterButton = document.getElementById(`filter_btn_${selectedFilter}`)
+	filterButton.style.display = 'block'
+}
 
-// function deleteTag(e) {
-//   e.target.parentElement.remove();
-//   const tagDiv = document.getElementById("filters_tags");
-//   if (tagDiv.innerHTML === "") {
-//     tagDiv.classList.remove("filters_tags_active");
-//   }
-// }
+function deleteTag(e) {
+	e.target.parentElement.remove()
+	const tagDiv = document.getElementById('filters_tags')
+	if (tagDiv.innerHTML === '') {
+		tagDiv.classList.remove('filters_tags_active')
+	}
+}
 
 // export function filterByTag(e) {
 //   createTag(e.target.innerText);
