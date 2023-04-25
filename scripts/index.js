@@ -12,6 +12,7 @@ let ustensilsList = []
 let lists = []
 let filteredDatas = []
 
+// création et affichage des cards recette via la recipeFactory
 function displayRecipes(datas) {
 	sortDatas(datas)
 	const recipesSection = document.getElementById('recipes')
@@ -22,7 +23,6 @@ function displayRecipes(datas) {
 		recipesSection.appendChild(recipeCardDOM)
 	})
 }
-// création et affichage des cards recette via la recipeFactory
 
 // création liste ingrédients via la recipeFactory
 function createListIngredients(datas) {
@@ -93,23 +93,20 @@ function displayFilter(lists) {
 }
 
 //génération des listes de filtres via la filterFactory
-// function generateLiFilter(lists) {
-// 	const selectedFilter = filterModel.selectedFilter
-// 	console.log(selectedFilter)
-// 	const liSection = document.getElementById(`filter_list_${selectedFilter}`)
-// 	lists.forEach((list) => {
-// 		let filterModel = filterFactory(list)
-// 		const filterCardDOM = filterModel.filledListFilter()
-// 		liSection.appendChild(filterCardDOM)
-// 	})
-// 	const liFilterArray = filterModel.liFilterArray
-// 	console.log(liFilterArray)
-// 	debugger
-// 	liFilterArray.forEach((li) => {
-// 		li.appendChild(liSection)
-// 		li.addEventListener('click', (e) => handleTag(e))
-// 	})
-// }
+function generateLiFilter(lists) {
+	lists.forEach((list) => {
+		const optionArray = Object.values(list)
+		let filterModel = filterFactory(list)
+		const filterListCardDOM = filterModel.getFilterListCardDOM(optionArray)
+		const selectedFilter = filterModel.selectedFilter
+		const liSection = document.getElementById(`filter_by_${selectedFilter}`)
+		const liFilter = filterModel.liFilterArray
+		liFilter.forEach((li) => {
+			li.addEventListener('click', (e) => handleTag(e, selectedFilter))
+		})
+		liSection.appendChild(filterListCardDOM)
+	})
+}
 
 async function init() {
 	datas = await getRecipes()

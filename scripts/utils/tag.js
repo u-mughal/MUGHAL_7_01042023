@@ -1,11 +1,9 @@
-import { filterFactory } from '../factory/filterFactory.js'
-
-export function handleTag() {
+export function handleTag(e, selectedFilter) {
 	console.log('coucou')
-	createTag(e)
+	createTag(e, selectedFilter)
 }
 
-function createTag(e) {
+function createTag(e, selectedFilter) {
 	const filterTag = document.getElementById('filters_tags')
 	filterTag.classList.add('filters_tags_active')
 

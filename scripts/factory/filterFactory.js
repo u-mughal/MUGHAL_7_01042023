@@ -12,7 +12,6 @@ export function filterFactory(data) {
 	const optionValue = Object.values(option)
 	const optionArray = optionValue[0]
 	let liFilterArray = []
-	console.log(typeof optionValue, optionValue)
 
 	// renvoi l'élément HTML d'un filtre
 	function getFilterCardDOM() {
@@ -25,7 +24,7 @@ export function filterFactory(data) {
 		btn.classList.add('filter_btn')
 		btn.addEventListener('click', (e) => {
 			toggleDropDown(e)
-			filledListFilter()
+			// filledListFilter()
 		})
 		filter.appendChild(btn)
 
@@ -75,11 +74,11 @@ export function filterFactory(data) {
 		inputChevronIcon.classList.add('fas', 'fa-chevron-up')
 		inputChevron.appendChild(inputChevronIcon)
 
-		const filterUl = document.createElement('ul')
-		filterUl.setAttribute('id', `filter_list_${selectedFilter}`)
-		filterUl.classList.add('list_option')
-		filterUl.classList.add('::-webkit-scrollbar')
-		filterList.appendChild(filterUl)
+		// const filterUl = document.createElement('ul')
+		// filterUl.setAttribute('id', `filter_list_${selectedFilter}`)
+		// filterUl.classList.add('list_option')
+		// filterUl.classList.add('::-webkit-scrollbar')
+		// filterList.appendChild(filterUl)
 
 		return filter
 	}
@@ -105,19 +104,24 @@ export function filterFactory(data) {
 	}
 
 	// création de l'élément HTML d'une liste de filtre
-	function createFilterListElt(options) {
-		const liSection = document.getElementById(`filter_list_${selectedFilter}`)
-		options.forEach((elt) => {
+	function getFilterListCardDOM(optionArray) {
+		const filterList = document.getElementById(`filter_by_${selectedFilter}`)
+
+		const filterUl = document.createElement('ul')
+		filterUl.setAttribute('id', `filter_list_${selectedFilter}`)
+		filterUl.classList.add('list_option')
+		filterUl.classList.add('::-webkit-scrollbar')
+		filterList.appendChild(filterUl)
+
+		optionArray[0].forEach((elt) => {
 			const liFilter = document.createElement('li')
 			liFilter.classList.add('filter_li')
 			const eltFormated = (elt + '').charAt(0).toUpperCase() + elt.substr(1)
 			liFilter.textContent = eltFormated
 			liFilterArray.push(liFilter)
-			// liFilter.addEventListener('click', (e) => handleTag(e))
-			liSection.appendChild(liFilter)
+			filterUl.appendChild(liFilter)
 		})
-		console.log(liFilterArray)
-		return liFilterArray
+		return filterUl
 	}
 
 	// rempli la liste des filtres selon avec ou sans saisie dans input
@@ -134,7 +138,7 @@ export function filterFactory(data) {
 				const oFormated = o.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 				return regex.test(oFormated)
 			})
-			createFilterListElt(matchKeywords)
+			getFilterListCardDOM(matchKeywords)
 		} else {
 			const inputSearchBar = document.getElementById('search_recipe')
 			if (inputSearchBar.className === 'active') {
@@ -142,16 +146,16 @@ export function filterFactory(data) {
 				const newOptionArray = optionArray.filter(
 					(option) => !option.toString().includes(searchValue)
 				)
-				createFilterListElt(newOptionArray)
+				getFilterListCardDOM(newOptionArray)
 			} else {
-				createFilterListElt(optionArray)
+				getFilterListCardDOM(optionArray)
 			}
 		}
 	}
 
-	function getSelectedFilter() {
-		return selectedFilter
-	}
+	// function getSelectedFilter() {
+	// 	return selectedFilter
+	// }
 
 	// // création de l'élément HTML d'un tag
 	// function createTag(e) {
@@ -206,7 +210,7 @@ export function filterFactory(data) {
 	// 	//   }
 	// }
 
-	return { getFilterCardDOM, getSelectedFilter, selectedFilter, liFilterArray }
+	return { getFilterCardDOM, getFilterListCardDOM, selectedFilter, liFilterArray }
 }
 
 // const tagSection = document.querySelector(".filters_tags_active");
