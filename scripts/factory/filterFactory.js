@@ -50,19 +50,19 @@ export function filterFactory(data) {
 		input.setAttribute('id', `input_${selectedFilter}`)
 		input.classList.add('filter_input')
 		input.setAttribute('placeholder', `Rechercher un ${optionSingular}`)
-		input.addEventListener('input', (e) => {
-			const value = e.target.value
-			const regexZeroCaracters = /^$/
-			const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/
-			const regexThreeCaracters = /[A-Za-z0-9]{3,}/
-			if (regexThreeCaracters.test(value)) {
-				filledListFilter(e.target.value)
-			} else if (regexZeroCaracters.test(value)) {
-				filledListFilter()
-			} else if (regexOneOrTwoCaracters.test(value)) {
-				null
-			}
-		})
+		// input.addEventListener('input', (e) => {
+		// 	const value = e.target.value
+		// 	const regexZeroCaracters = /^$/
+		// 	const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/
+		// 	const regexThreeCaracters = /[A-Za-z0-9]{3,}/
+		// 	if (regexThreeCaracters.test(value)) {
+		// 		filledListFilter(e.target.value)
+		// 	} else if (regexZeroCaracters.test(value)) {
+		// 		filledListFilter()
+		// 	} else if (regexOneOrTwoCaracters.test(value)) {
+		// 		null
+		// 	}
+		// })
 		filterList.appendChild(input)
 
 		const inputChevron = document.createElement('span')
@@ -80,7 +80,7 @@ export function filterFactory(data) {
 		// filterUl.classList.add('::-webkit-scrollbar')
 		// filterList.appendChild(filterUl)
 
-		return filter
+		return { filter, input }
 	}
 
 	// gestion de la dropdown de filtre
@@ -90,8 +90,12 @@ export function filterFactory(data) {
 			list.style.display = 'none'
 		})
 		const allBtn = document.querySelectorAll('.filter_btn')
-		allBtn.forEach((list) => {
-			list.style.display = 'block'
+		allBtn.forEach((btn) => {
+			btn.style.display = 'block'
+		})
+		const allInput = document.querySelectorAll('.filter_input')
+		allInput.forEach((input) => {
+			input.classList.remove('filter_input_active')
 		})
 		if (e.currentTarget.className != 'filter_close') {
 			const btnClicked = document.getElementById(`filter_btn_${selectedFilter}`)
@@ -125,110 +129,33 @@ export function filterFactory(data) {
 	}
 
 	// rempli la liste des filtres selon avec ou sans saisie dans input
-	function filledListFilter(keyword = null) {
-		const liSection = document.getElementById(`filter_list_${selectedFilter}`)
-		liSection.innerHTML = ''
-		if (keyword) {
-			const keywordFormated = keyword
-				.toLowerCase()
-				.normalize('NFD')
-				.replace(/[\u0300-\u036f]/g, '')
-			const regex = new RegExp(keywordFormated)
-			const matchKeywords = optionArray.filter((o) => {
-				const oFormated = o.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-				return regex.test(oFormated)
-			})
-			getFilterListCardDOM(matchKeywords)
-		} else {
-			const inputSearchBar = document.getElementById('search_recipe')
-			if (inputSearchBar.className === 'active') {
-				const searchValue = inputSearchBar.value
-				const newOptionArray = optionArray.filter(
-					(option) => !option.toString().includes(searchValue)
-				)
-				getFilterListCardDOM(newOptionArray)
-			} else {
-				getFilterListCardDOM(optionArray)
-			}
-		}
-	}
-
-	// function getSelectedFilter() {
-	// 	return selectedFilter
-	// }
-
-	// // création de l'élément HTML d'un tag
-	// function createTag(e) {
-	// 	const filterTag = document.getElementById('filters_tags')
-	// 	filterTag.classList.add('filters_tags_active')
-
-	// 	const tagDiv = document.createElement('div')
-	// 	tagDiv.classList.add('filter_tag_div')
-	// 	tagDiv.classList.add(`color_tag_${selectedFilter}`)
-	// 	filterTag.appendChild(tagDiv)
-
-	// 	const tag = document.createElement('p')
-	// 	tag.classList.add('filter_tag_p')
-	// 	tag.textContent = e
-	// 	tagDiv.appendChild(tag)
-
-	// 	const tagIcon = document.createElement('i')
-	// 	tagIcon.classList.add('far', 'fa-times-circle')
-	// 	tagIcon.addEventListener('click', (e) => deleteTag(e))
-	// 	tagDiv.appendChild(tagIcon)
-
-	// 	const filterInput = document.getElementById(`input_${selectedFilter}`)
-	// 	filterInput.value = ''
-	// 	const filterList = document.getElementById(`filter_by_${selectedFilter}`)
-	// 	filterList.style.display = 'none'
-	// 	const filterButton = document.getElementById(`filter_btn_${selectedFilter}`)
-	// 	filterButton.style.display = 'block'
-	// }
-
-	// function deleteTag(e) {
-	// 	e.target.parentElement.remove()
-	// 	const tagDiv = document.getElementById('filters_tags')
-	// 	if (tagDiv.innerHTML === '') {
-	// 		tagDiv.classList.remove('filters_tags_active')
+	// function filledListFilter(keyword = null) {
+	// 	const liSection = document.getElementById(`filter_list_${selectedFilter}`)
+	// 	liSection.innerHTML = ''
+	// 	if (keyword) {
+	// 		const keywordFormated = keyword
+	// 			.toLowerCase()
+	// 			.normalize('NFD')
+	// 			.replace(/[\u0300-\u036f]/g, '')
+	// 		const regex = new RegExp(keywordFormated)
+	// 		const matchKeywords = optionArray.filter((o) => {
+	// 			const oFormated = o.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+	// 			return regex.test(oFormated)
+	// 		})
+	// 		getFilterListCardDOM(matchKeywords)
+	// 	} else {
+	// 		const inputSearchBar = document.getElementById('search_recipe')
+	// 		if (inputSearchBar.className === 'active') {
+	// 			const searchValue = inputSearchBar.value
+	// 			const newOptionArray = optionArray.filter(
+	// 				(option) => !option.toString().includes(searchValue)
+	// 			)
+	// 			getFilterListCardDOM(newOptionArray)
+	// 		} else {
+	// 			getFilterListCardDOM(optionArray)
+	// 		}
 	// 	}
-	// }
-
-	// function handleTag(e) {
-	// 	const inputSearchBar = document.getElementById('search_recipe')
-	// 	//   const tagSection = document.querySelector(".filters_tags_active");
-	// 	const tag = e.target.innerText
-	// 	createTag(tag)
-	// 	if (inputSearchBar.className === 'active') {
-	// 		filterDatas(tag, filteredDatas)
-	// 		displayRecipe(fileredDatasWithTag)
-	// 		filledListFilter(fileredDatasWithTag)
-	// 	}
-	// 	//   } else if (inputSearchBar.className === "active" && tagSection) {
-	// 	//     filterDatas(tag, filteredDatas);
-	// 	//   } else {
-	// 	//     filterDatas(tag, filteredDatas);
-	// 	//   }
 	// }
 
 	return { getFilterCardDOM, getFilterListCardDOM, selectedFilter, liFilterArray }
 }
-
-// const tagSection = document.querySelector(".filters_tags_active");
-// if (tagSection) {
-//   const tags = document.querySelectorAll(".filter_tag_p");
-//   let tagList = [];
-//   const tagContent = tags.forEach((tag) => tagList.push(tag.textContent));
-//   debugger;
-//   const newOptionArray = optionArray.filter(
-//     (option) => !option.toString().includes(searchValue)
-//   );
-//   console.log(newOptionArray);
-//   liSection.innerHTML = "";
-//   newOptionArray.forEach((elt) => {
-//     const liFilter = document.createElement("li");
-//     liFilter.classList.add("filter_li");
-//     const eltFormated = majFirstLetter(elt);
-//     liFilter.textContent = eltFormated;
-//     liFilter.addEventListener("click", (e) => handleTag(e));
-//     liSection.appendChild(liFilter);
-//   });

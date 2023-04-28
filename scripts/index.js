@@ -2,6 +2,7 @@ import { getRecipes } from './api/services.js'
 import { recipeFactory } from './factory/recipeFactory.js'
 import { filterFactory } from './factory/filterFactory.js'
 import { filterDatas, sortDatas } from './utils/filterAlgo.js'
+import { handleFilterList } from './utils/filter.js'
 import { handleTag } from './utils/tag.js'
 
 // déclaration variables
@@ -88,32 +89,72 @@ function displayFilter(lists) {
 	lists.forEach((list) => {
 		let filterModel = filterFactory(list)
 		const filterCardDOM = filterModel.getFilterCardDOM()
-		filtersSection.appendChild(filterCardDOM)
+		filtersSection.appendChild(filterCardDOM['filter'])
+		filterCardDOM['input'].addEventListener('input', (e) => handleFilterList(e))
+		// const value = e.target.value
+		// const regexZeroCaracters = /^$/
+		// const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/
+		// const regexThreeCaracters = /[A-Za-z0-9]{3,}/
+		// debugger
+		// if (regexThreeCaracters.test(value)) {
+		// 	initFilterList(e.target.value)
+		// } else if (regexZeroCaracters.test(value)) {
+		// 	initFilterList()
+		// } else if (regexOneOrTwoCaracters.test(value)) {
+		// 	null
+		// }
 	})
 }
 
 //génération des listes de filtres via la filterFactory
-function generateLiFilter(lists) {
+export function initFilterList(lists) {
 	lists.forEach((list) => {
 		const optionArray = Object.values(list)
-		let filterModel = filterFactory(list)
-		const filterListCardDOM = filterModel.getFilterListCardDOM(optionArray)
-		const selectedFilter = filterModel.selectedFilter
+		let filterListModel = filterFactory(list)
+		const filterListCardDOM = filterListModel.getFilterListCardDOM(optionArray)
+		const selectedFilter = filterListModel.selectedFilter
 		const liSection = document.getElementById(`filter_by_${selectedFilter}`)
-		const liFilter = filterModel.liFilterArray
+		const liFilter = filterListModel.liFilterArray
 		liFilter.forEach((li) => {
 			li.addEventListener('click', (e) => handleTag(e, selectedFilter))
 		})
 		liSection.appendChild(filterListCardDOM)
 	})
 }
+// function filledListFilter(keyword = null) {
+// 	const liSection = document.getElementById(`filter_list_${selectedFilter}`)
+// 	liSection.innerHTML = ''
+// 	if (keyword) {
+// 		const keywordFormated = keyword
+// 			.toLowerCase()
+// 			.normalize('NFD')
+// 			.replace(/[\u0300-\u036f]/g, '')
+// 		const regex = new RegExp(keywordFormated)
+// 		const matchKeywords = optionArray.filter((o) => {
+// 			const oFormated = o.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+// 			return regex.test(oFormated)
+// 		})
+// 		getFilterListCardDOM(matchKeywords)
+// 	} else {
+// 		const inputSearchBar = document.getElementById('search_recipe')
+// 		if (inputSearchBar.className === 'active') {
+// 			const searchValue = inputSearchBar.value
+// 			const newOptionArray = optionArray.filter(
+// 				(option) => !option.toString().includes(searchValue)
+// 			)
+// 			getFilterListCardDOM(newOptionArray)
+// 		} else {
+// 			getFilterListCardDOM(optionArray)
+// 		}
+// 	}
+// }
 
 async function init() {
 	datas = await getRecipes()
 	displayRecipes(datas)
 	listInit(datas)
 	displayFilter(lists)
-	generateLiFilter(lists)
+	initFilterList(lists)
 }
 
 init()
@@ -131,6 +172,7 @@ searchBar.addEventListener('input', (e) => {
 		displayRecipes(filteredDatas)
 		listInit(filteredDatas)
 		displayFilter(lists)
+		initFilterList(lists)
 		if (filteredDatas.length === 0) {
 			recipesSection.innerHTML = "Votre recherche n'a pas de correspondance."
 			recipesSection.classList.add('empty')
@@ -142,6 +184,7 @@ searchBar.addEventListener('input', (e) => {
 		displayRecipes(datas)
 		listInit(datas)
 		displayFilter(lists)
+		initFilterList(lists)
 		recipesSection.classList.remove('empty')
 	}
 })

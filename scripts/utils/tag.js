@@ -48,6 +48,43 @@ function deleteTag(e) {
 //   filterDatas(e.target.innerText, datas);
 // }
 
+// function handleTag(e) {
+// 	const inputSearchBar = document.getElementById('search_recipe')
+// 	//   const tagSection = document.querySelector(".filters_tags_active");
+// 	const tag = e.target.innerText
+// 	createTag(tag)
+// 	if (inputSearchBar.className === 'active') {
+// 		filterDatas(tag, filteredDatas)
+// 		displayRecipe(fileredDatasWithTag)
+// 		filledListFilter(fileredDatasWithTag)
+// 	}
+// 	//   } else if (inputSearchBar.className === "active" && tagSection) {
+// 	//     filterDatas(tag, filteredDatas);
+// 	//   } else {
+// 	//     filterDatas(tag, filteredDatas);
+// 	//   }
+// }
+
+// const tagSection = document.querySelector(".filters_tags_active");
+// if (tagSection) {
+//   const tags = document.querySelectorAll(".filter_tag_p");
+//   let tagList = [];
+//   const tagContent = tags.forEach((tag) => tagList.push(tag.textContent));
+//   debugger;
+//   const newOptionArray = optionArray.filter(
+//     (option) => !option.toString().includes(searchValue)
+//   );
+//   console.log(newOptionArray);
+//   liSection.innerHTML = "";
+//   newOptionArray.forEach((elt) => {
+//     const liFilter = document.createElement("li");
+//     liFilter.classList.add("filter_li");
+//     const eltFormated = majFirstLetter(elt);
+//     liFilter.textContent = eltFormated;
+//     liFilter.addEventListener("click", (e) => handleTag(e));
+//     liSection.appendChild(liFilter);
+//   });
+
 // quand on sélectionne/clique sur filtre
 // on créé un tag html
 // createTag();
