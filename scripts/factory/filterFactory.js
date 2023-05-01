@@ -9,8 +9,8 @@ export function filterFactory(data) {
 	}
 	const optionWithoutAccent = optionSingular.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 	const selectedFilter = optionWithoutAccent
-	const optionValue = Object.values(option)
-	const optionArray = optionValue[0]
+	// const optionValue = Object.values(option)
+	// const optionArray = optionValue[0]
 	let liFilterArray = []
 
 	// renvoi l'élément HTML d'un filtre
@@ -49,6 +49,7 @@ export function filterFactory(data) {
 		input.setAttribute('type', 'text')
 		input.setAttribute('id', `input_${selectedFilter}`)
 		input.classList.add('filter_input')
+		input.dataset.property = selectedFilter
 		input.setAttribute('placeholder', `Rechercher un ${optionSingular}`)
 		// input.addEventListener('input', (e) => {
 		// 	const value = e.target.value
@@ -115,6 +116,7 @@ export function filterFactory(data) {
 		filterUl.setAttribute('id', `filter_list_${selectedFilter}`)
 		filterUl.classList.add('list_option')
 		filterUl.classList.add('::-webkit-scrollbar')
+		filterUl.dataset.property = selectedFilter
 		filterList.appendChild(filterUl)
 
 		optionArray[0].forEach((elt) => {

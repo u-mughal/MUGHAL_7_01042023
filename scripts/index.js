@@ -90,24 +90,13 @@ function displayFilter(lists) {
 		let filterModel = filterFactory(list)
 		const filterCardDOM = filterModel.getFilterCardDOM()
 		filtersSection.appendChild(filterCardDOM['filter'])
-		filterCardDOM['input'].addEventListener('input', (e) => handleFilterList(e))
-		// const value = e.target.value
-		// const regexZeroCaracters = /^$/
-		// const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/
-		// const regexThreeCaracters = /[A-Za-z0-9]{3,}/
-		// debugger
-		// if (regexThreeCaracters.test(value)) {
-		// 	initFilterList(e.target.value)
-		// } else if (regexZeroCaracters.test(value)) {
-		// 	initFilterList()
-		// } else if (regexOneOrTwoCaracters.test(value)) {
-		// 	null
-		// }
+		const optionArray = Object.values(list)
+		filterCardDOM['input'].addEventListener('input', (e) => handleFilterList(e, optionArray, list))
 	})
 }
 
 //génération des listes de filtres via la filterFactory
-export function initFilterList(lists) {
+function createFilterList(lists) {
 	lists.forEach((list) => {
 		const optionArray = Object.values(list)
 		let filterListModel = filterFactory(list)
@@ -121,40 +110,13 @@ export function initFilterList(lists) {
 		liSection.appendChild(filterListCardDOM)
 	})
 }
-// function filledListFilter(keyword = null) {
-// 	const liSection = document.getElementById(`filter_list_${selectedFilter}`)
-// 	liSection.innerHTML = ''
-// 	if (keyword) {
-// 		const keywordFormated = keyword
-// 			.toLowerCase()
-// 			.normalize('NFD')
-// 			.replace(/[\u0300-\u036f]/g, '')
-// 		const regex = new RegExp(keywordFormated)
-// 		const matchKeywords = optionArray.filter((o) => {
-// 			const oFormated = o.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-// 			return regex.test(oFormated)
-// 		})
-// 		getFilterListCardDOM(matchKeywords)
-// 	} else {
-// 		const inputSearchBar = document.getElementById('search_recipe')
-// 		if (inputSearchBar.className === 'active') {
-// 			const searchValue = inputSearchBar.value
-// 			const newOptionArray = optionArray.filter(
-// 				(option) => !option.toString().includes(searchValue)
-// 			)
-// 			getFilterListCardDOM(newOptionArray)
-// 		} else {
-// 			getFilterListCardDOM(optionArray)
-// 		}
-// 	}
-// }
 
 async function init() {
 	datas = await getRecipes()
 	displayRecipes(datas)
 	listInit(datas)
 	displayFilter(lists)
-	initFilterList(lists)
+	createFilterList(lists)
 }
 
 init()
@@ -172,7 +134,7 @@ searchBar.addEventListener('input', (e) => {
 		displayRecipes(filteredDatas)
 		listInit(filteredDatas)
 		displayFilter(lists)
-		initFilterList(lists)
+		createFilterList(lists)
 		if (filteredDatas.length === 0) {
 			recipesSection.innerHTML = "Votre recherche n'a pas de correspondance."
 			recipesSection.classList.add('empty')
@@ -184,7 +146,7 @@ searchBar.addEventListener('input', (e) => {
 		displayRecipes(datas)
 		listInit(datas)
 		displayFilter(lists)
-		initFilterList(lists)
+		createFilterList(lists)
 		recipesSection.classList.remove('empty')
 	}
 })

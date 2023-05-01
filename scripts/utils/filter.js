@@ -1,23 +1,28 @@
-import { initFilterList } from '../index.js'
+import { filterFactory } from '../factory/filterFactory.js'
 
-export function handleFilterList(e) {
+export function handleFilterList(e, optionArray, list) {
 	const value = e.target.value
 	const regexZeroCaracters = /^$/
 	const regexOneOrTwoCaracters = /[A-Za-z0-9]{1,2}/
 	const regexThreeCaracters = /[A-Za-z0-9]{3,}/
+	// console.log(typeof optionArray, optionArray)
+	// console.log(typeof optionArray[0], optionArray[0])
+	// console.log(typeof optionArray['0'], optionArray['0'])
+	// console.log(typeof Object.values(optionArray), Object.values(optionArray))
 	if (regexThreeCaracters.test(value)) {
-		filledListFilter(e.target.value)
+		updateListFilter(e.target.value, optionArray[0], list)
 	} else if (regexZeroCaracters.test(value)) {
-		filledListFilter()
+		updateListFilter(optionArray[0], list)
 	} else if (regexOneOrTwoCaracters.test(value)) {
 		null
 	}
 }
 
-function filledListFilter(keyword = null) {
-	const selectedFilter = document.querySelector('.filter_input_active')
+function updateListFilter(keyword = null, optionArray, list) {
+	const selectedFilter = document.querySelector('.filter_input_active').dataset.property
 	const liSection = document.getElementById(`filter_list_${selectedFilter}`)
-	liSection.innerHTML = ''
+	liSection.remove()
+	console.log(optionArray)
 	if (keyword) {
 		const keywordFormated = keyword
 			.toLowerCase()
@@ -28,7 +33,8 @@ function filledListFilter(keyword = null) {
 			const oFormated = o.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 			return regex.test(oFormated)
 		})
-		initFilterList(matchKeywords)
+		console.log(typeof matchKeywords, matchKeywords)
+		initFilterList(matchKeywords, list)
 	} else {
 		const inputSearchBar = document.getElementById('search_recipe')
 		if (inputSearchBar.className === 'active') {
@@ -41,4 +47,18 @@ function filledListFilter(keyword = null) {
 			initFilterList(optionArray)
 		}
 	}
+}
+
+function initFilterList(optionArray, list) {
+	debugger
+	console.log(optionArray)
+	let filterListModel = filterFactory(list)
+	const filterListCardDOM = filterListModel.getFilterListCardDOM(optionArray)
+	const selectedFilter = filterListModel.selectedFilter
+	const liSection = document.getElementById(`filter_by_${selectedFilter}`)
+	const liFilter = filterListModel.liFilterArray
+	liFilter.forEach((li) => {
+		li.addEventListener('click', (e) => handleTag(e, selectedFilter))
+	})
+	liSection.appendChild(filterListCardDOM)
 }
