@@ -2,7 +2,8 @@ import { getRecipes } from './api/services.js'
 import { recipeFactory } from './factory/recipeFactory.js'
 import { filterFactory } from './factory/filterFactory.js'
 import { filterDatas, sortDatas } from './utils/filterAlgo.js'
-import { handleFilterList } from './utils/filter.js'
+import { toggleDropDown } from './utils/dropdown.js'
+// import { initFilterList } from './utils/filter.js'
 import { handleTag } from './utils/tag.js'
 
 // déclaration variables
@@ -68,11 +69,11 @@ function createListUstensils(datas) {
 }
 
 function groupLists() {
-	lists = [
-		{ Ingrédients: ingredientsList },
-		{ Appareils: appliancesList },
-		{ Ustensiles: ustensilsList },
-	]
+	lists = {
+		ingredient: ingredientsList,
+		appliance: appliancesList,
+		ustensil: ustensilsList,
+	}
 }
 
 function listInit(datas) {
@@ -82,59 +83,92 @@ function listInit(datas) {
 	groupLists()
 }
 
-//création et affichage des filtres via la filterFactory
-function displayFilter(lists) {
-	const filtersSection = document.getElementById('filters_buttons')
-	filtersSection.innerHTML = ''
-	lists.forEach((list) => {
-		let filterModel = filterFactory(list)
-		const filterCardDOM = filterModel.getFilterCardDOM()
-		filtersSection.appendChild(filterCardDOM['filter'])
-		const optionArray = Object.values(list)
-		filterCardDOM['input'].addEventListener('input', (e) => handleFilterList(e, optionArray, list))
-	})
-}
-
 //génération des listes de filtres via la filterFactory
-function createFilterList(lists) {
-	lists.forEach((list) => {
-		const optionArray = Object.values(list)
-		let filterListModel = filterFactory(list)
-		const filterListCardDOM = filterListModel.getFilterListCardDOM(optionArray)
-		const selectedFilter = filterListModel.selectedFilter
-		const liSection = document.getElementById(`filter_by_${selectedFilter}`)
-		const liFilter = filterListModel.liFilterArray
-		liFilter.forEach((li) => {
-			li.addEventListener('click', (e) => handleTag(e, selectedFilter))
-		})
-		liSection.appendChild(filterListCardDOM)
-	})
+function displayFilterList(lists, keyword = null) {
+	for (const [key, value] of Object.entries(lists)) {
+		const ulSection = document.getElementById(`filter_list_${key}`)
+		ulSection.innerHTML = ''
+		if (keyword) {
+			const keywordFormated = keyword
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+			const newValue = Object.values(value).filter((elt) => {
+				const eltFormated = elt
+					.toLowerCase()
+					.normalize('NFD')
+					.replace(/[\u0300-\u036f]/g, '')
+				return !eltFormated.includes(keywordFormated)
+			})
+			let filterListModel = filterFactory(newValue)
+			const filterListCardDOM = filterListModel.getFilterListCardDOM()
+			Object.values(filterListCardDOM).forEach((li) => {
+				li.addEventListener('click', (e) => handleTag(e, key))
+				ulSection.appendChild(li)
+			})
+		} else {
+			let filterListModel = filterFactory(value)
+			const filterListCardDOM = filterListModel.getFilterListCardDOM()
+			Object.values(filterListCardDOM).forEach((li) => {
+				li.addEventListener('click', (e) => handleTag(e, key))
+				ulSection.appendChild(li)
+			})
+		}
+	}
 }
 
 async function init() {
 	datas = await getRecipes()
 	displayRecipes(datas)
 	listInit(datas)
-	displayFilter(lists)
-	createFilterList(lists)
+	displayFilterList(lists)
 }
 
 init()
+
+//------------------------------------------------------------------------------------------
+// Dropdown
+const triggers = document.querySelectorAll('.trigger')
+triggers.forEach((trigger) => trigger.addEventListener('click', (e) => toggleDropDown(e)))
+
+//------------------------------------------------------------------------------------------
+// Filter search
+const inputs = document.querySelectorAll('.filter_input')
+// inputs.forEach((input) => input.addEventListener('input', (e) => initFilterList(e)))
+inputs.forEach((input) =>
+	input.addEventListener('input', (e) => {
+		const value = e.target.value
+		// const inputSearchBar = document.getElementById('search_recipe')
+		if (value.length >= 3) {
+			// if (inputSearchBar.className === 'active') {
+			// 	const searchValue = inputSearchBar.value
+			// 	const newValue = optionArray.filter((option) => !option.toString().includes(searchValue))
+			filteredDatas = filterDatas(e.target.value, datas)
+			displayRecipes(filteredDatas)
+			listInit(filteredDatas)
+			displayFilterList(lists, value)
+			// } else {
+			// }
+		} else {
+			displayRecipes(datas)
+			listInit(datas)
+			displayFilterList(lists)
+		}
+	})
+)
 
 //------------------------------------------------------------------------------------------
 // Event Listener
 const searchBar = document.querySelector('#search_recipe')
 searchBar.addEventListener('input', (e) => {
 	const value = e.target.value
-	const regexThreeCaracters = /[A-Za-z0-9]{3,}/
 	const recipesSection = document.getElementById('recipes')
-	if (regexThreeCaracters.test(value)) {
+	if (value.length >= 3) {
 		searchBar.classList.add('active')
 		filteredDatas = filterDatas(e.target.value, datas)
 		displayRecipes(filteredDatas)
 		listInit(filteredDatas)
-		displayFilter(lists)
-		createFilterList(lists)
+		displayFilterList(lists, value)
 		if (filteredDatas.length === 0) {
 			recipesSection.innerHTML = "Votre recherche n'a pas de correspondance."
 			recipesSection.classList.add('empty')
@@ -145,8 +179,7 @@ searchBar.addEventListener('input', (e) => {
 		searchBar.classList.remove('active')
 		displayRecipes(datas)
 		listInit(datas)
-		displayFilter(lists)
-		createFilterList(lists)
+		displayFilterList(lists)
 		recipesSection.classList.remove('empty')
 	}
 })

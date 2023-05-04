@@ -54,13 +54,14 @@
   position: relative;
 }
 
+/* filter_list >> filter_form */
 .filter_btn,
-.filter_list {
+.filter_form {
   color: white;
   border-radius: 5px;
 }
 
-.filter_list {
+.filter_form {
   display: none;
   cursor: pointer;
   z-index: 1;
@@ -74,17 +75,17 @@
   background-color: #3282f7;
 }
 
-#filter_btn_appareil,
-#input_appareil,
-#filter_list_appareil,
-.color_tag_appareil {
+#filter_btn_appliance,
+#input_appliance,
+#filter_list_appliance,
+.color_tag_appliance {
   background-color: #68d9a4;
 }
 
-#filter_btn_ustensile,
-#input_ustensile,
-#filter_list_ustensile,
-.color_tag_ustensile {
+#filter_btn_ustensil,
+#input_ustensil,
+#filter_list_ustensil,
+.color_tag_ustensil {
   background-color: #ed6454;
 }
 
@@ -123,8 +124,9 @@
   right: 15px;
 }
 
-.list_option {
-  display: flex;
+/* list_option >> filter_list */
+.filter_list{
+  display: none;
   flex-direction: column;
   flex-wrap: wrap;
   column-gap: 70px;
@@ -161,5 +163,7 @@
 }
 
 .filter_li {
+  color: white;
   width: 150px;
+  cursor: pointer;
 }
