@@ -4,7 +4,7 @@ import { filterFactory } from './factory/filterFactory.js'
 import { filterDatas, sortDatas } from './utils/filterAlgo.js'
 import { toggleDropDown } from './utils/dropdown.js'
 // import { initFilterList } from './utils/filter.js'
-import { handleTag } from './utils/tag.js'
+import { createTag } from './utils/tag.js'
 
 // déclaration variables
 let datas = []
@@ -83,34 +83,70 @@ function listInit(datas) {
 	groupLists()
 }
 
+//si
 //génération des listes de filtres via la filterFactory
-function displayFilterList(lists, keyword = null) {
+function displayFilterList(lists, keyword = null, source = null) {
 	for (const [key, value] of Object.entries(lists)) {
 		const ulSection = document.getElementById(`filter_list_${key}`)
 		ulSection.innerHTML = ''
 		if (keyword) {
-			const keywordFormated = keyword
-				.toLowerCase()
-				.normalize('NFD')
-				.replace(/[\u0300-\u036f]/g, '')
-			const newValue = Object.values(value).filter((elt) => {
-				const eltFormated = elt
+			// si argument keyword transmis (input)
+			if (source) {
+				// si source filtre
+				const keywordFormated = keyword
 					.toLowerCase()
 					.normalize('NFD')
 					.replace(/[\u0300-\u036f]/g, '')
-				return !eltFormated.includes(keywordFormated)
-			})
-			let filterListModel = filterFactory(newValue)
-			const filterListCardDOM = filterListModel.getFilterListCardDOM()
-			Object.values(filterListCardDOM).forEach((li) => {
-				li.addEventListener('click', (e) => handleTag(e, key))
-				ulSection.appendChild(li)
-			})
+				//filtre les listes en gardant la valeur saisie
+				const newValuesList = Object.values(value).filter((elt) => {
+					const eltFormated = elt
+						.toLowerCase()
+						.normalize('NFD')
+						.replace(/[\u0300-\u036f]/g, '')
+					return eltFormated.includes(keywordFormated)
+				})
+				//envoi la nouvelle liste de filtre à la filterFactory pour les générer et afficher
+				let filterListModel = filterFactory(newValuesList)
+				const filterListCardDOM = filterListModel.getFilterListCardDOM()
+				Object.values(filterListCardDOM).forEach((li) => {
+					li.addEventListener('click', (e) => createTag(e, key))
+					ulSection.appendChild(li)
+				})
+			} else {
+				// si argument keyword transmis (input)
+				const keywordFormated = keyword
+					.toLowerCase()
+					.normalize('NFD')
+					.replace(/[\u0300-\u036f]/g, '')
+				//filtre les listes en enlevant la valeur saisie
+				const newValuesList = Object.values(value).filter((elt) => {
+					const eltFormated = elt
+						.toLowerCase()
+						.normalize('NFD')
+						.replace(/[\u0300-\u036f]/g, '')
+					return !eltFormated.includes(keywordFormated)
+				})
+				//envoi la nouvelle liste de filtre à la filterFactory pour les générer et afficher
+				let filterListModel = filterFactory(newValuesList)
+				const filterListCardDOM = filterListModel.getFilterListCardDOM()
+				Object.values(filterListCardDOM).forEach((li) => {
+					li.addEventListener('click', (e) => createTag(e, key))
+					ulSection.appendChild(li)
+				})
+			}
 		} else {
+			// si pas argument keyword transmis (input)
+			//envoi la nouvelle liste de filtre à la filterFactory pour les générer et afficher
 			let filterListModel = filterFactory(value)
 			const filterListCardDOM = filterListModel.getFilterListCardDOM()
 			Object.values(filterListCardDOM).forEach((li) => {
-				li.addEventListener('click', (e) => handleTag(e, key))
+				li.addEventListener('click', (e) => {
+					createTag(e, key)
+					filteredDatas = filterDatas(e.target.value, datas)
+					displayRecipes(filteredDatas)
+					listInit(filteredDatas)
+					displayFilterList(lists, value, sourceValue)
+				})
 				ulSection.appendChild(li)
 			})
 		}
@@ -138,6 +174,8 @@ const inputs = document.querySelectorAll('.filter_input')
 inputs.forEach((input) =>
 	input.addEventListener('input', (e) => {
 		const value = e.target.value
+		const sourceValue = e.target.classList.value
+		console.log(sourceValue)
 		// const inputSearchBar = document.getElementById('search_recipe')
 		if (value.length >= 3) {
 			// if (inputSearchBar.className === 'active') {
@@ -146,7 +184,7 @@ inputs.forEach((input) =>
 			filteredDatas = filterDatas(e.target.value, datas)
 			displayRecipes(filteredDatas)
 			listInit(filteredDatas)
-			displayFilterList(lists, value)
+			displayFilterList(lists, value, sourceValue)
 			// } else {
 			// }
 		} else {
@@ -164,11 +202,11 @@ searchBar.addEventListener('input', (e) => {
 	const value = e.target.value
 	const recipesSection = document.getElementById('recipes')
 	if (value.length >= 3) {
-		searchBar.classList.add('active')
-		filteredDatas = filterDatas(e.target.value, datas)
-		displayRecipes(filteredDatas)
-		listInit(filteredDatas)
-		displayFilterList(lists, value)
+		searchBar.classList.add('active') /** rajouter un style */
+		filteredDatas = filterDatas(e.target.value, datas) // filtre les recettes avec la value de l'input
+		displayRecipes(filteredDatas) // affiche les recettes filtrées
+		listInit(filteredDatas) // réinitialise les listes ingr, app, ustens avec les recettes filtrées
+		displayFilterList(lists, value) // filtre et affiche les listes les listes des recettes filtrées
 		if (filteredDatas.length === 0) {
 			recipesSection.innerHTML = "Votre recherche n'a pas de correspondance."
 			recipesSection.classList.add('empty')
@@ -177,9 +215,10 @@ searchBar.addEventListener('input', (e) => {
 		}
 	} else {
 		searchBar.classList.remove('active')
-		displayRecipes(datas)
-		listInit(datas)
-		displayFilterList(lists)
+		// displayRecipes(datas)
+		// listInit(datas)
+		// displayFilterList(lists)
+		init()
 		recipesSection.classList.remove('empty')
 	}
 })

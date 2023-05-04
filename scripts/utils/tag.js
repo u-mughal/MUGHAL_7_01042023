@@ -1,9 +1,8 @@
-export function handleTag(e, selectedFilter) {
-	console.log('coucou')
-	createTag(e, selectedFilter)
-}
+// export function handleTag(e, selectedFilter) {
+// 	createTag(e.target.innerText, selectedFilter)
+// }
 
-function createTag(e, selectedFilter) {
+export function createTag(e, selectedFilter) {
 	const filterTag = document.getElementById('filters_tags')
 	filterTag.classList.add('filters_tags_active')
 
@@ -14,7 +13,7 @@ function createTag(e, selectedFilter) {
 
 	const tag = document.createElement('p')
 	tag.classList.add('filter_tag_p')
-	tag.textContent = e
+	tag.textContent = e.target.innerText
 	tagDiv.appendChild(tag)
 
 	const tagIcon = document.createElement('i')
@@ -24,7 +23,9 @@ function createTag(e, selectedFilter) {
 
 	const filterInput = document.getElementById(`input_${selectedFilter}`)
 	filterInput.value = ''
-	const filterList = document.getElementById(`filter_by_${selectedFilter}`)
+	const filterListInput = document.getElementById(`filter_by_${selectedFilter}`)
+	filterListInput.style.display = 'none'
+	const filterList = document.getElementById(`filter_list_${selectedFilter}`)
 	filterList.style.display = 'none'
 	const filterButton = document.getElementById(`filter_btn_${selectedFilter}`)
 	filterButton.style.display = 'block'
