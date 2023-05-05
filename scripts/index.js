@@ -1,36 +1,36 @@
 import { getRecipes } from './api/services.js'
 import { recipeFactory } from './factory/recipeFactory.js'
 import { filterFactory } from './factory/filterFactory.js'
-import { filterDatas, sortDatas } from './utils/filterAlgo.js'
+import { filterRecipes, sortRecipes } from './utils/filterAlgo.js'
 import { toggleDropDown } from './utils/dropdown.js'
 // import { initFilterList } from './utils/filter.js'
 import { createTag } from './utils/tag.js'
 
 // déclaration variables
-let datas = []
+let recipes = []
 let ingredientsList = []
 let appliancesList = []
 let ustensilsList = []
 let lists = []
-let filteredDatas = []
+let filteredRecipes = []
 
 // création et affichage des cards recette via la recipeFactory
-function displayRecipes(datas) {
-	sortDatas(datas)
+function displayRecipes(recipes) {
+	sortRecipes(recipes)
 	const recipesSection = document.getElementById('recipes')
 	recipesSection.innerHTML = ''
-	datas.forEach((data) => {
-		let recipeModel = recipeFactory(data)
+	recipes.forEach((recipe) => {
+		let recipeModel = recipeFactory(recipe)
 		const recipeCardDOM = recipeModel.getRecipeCard()
 		recipesSection.appendChild(recipeCardDOM)
 	})
 }
 
 // création liste ingrédients via la recipeFactory
-function createListIngredients(datas) {
+function createListIngredients(recipes) {
 	let ingredientsListBrut = []
-	datas.forEach((data) => {
-		let listeModel = recipeFactory(data)
+	recipes.forEach((recipe) => {
+		let listeModel = recipeFactory(recipe)
 		const ingredients = listeModel.getIngredients()
 		ingredientsListBrut.push(...ingredients)
 	})
@@ -41,10 +41,10 @@ function createListIngredients(datas) {
 }
 
 // création liste appareils via la recipeFactory
-function createListAppliances(datas) {
+function createListAppliances(recipes) {
 	let applianceListBrut = []
-	datas.forEach((data) => {
-		let listeModel = recipeFactory(data)
+	recipes.forEach((recipe) => {
+		let listeModel = recipeFactory(recipe)
 		const appliances = listeModel.getAppliances()
 		applianceListBrut.push(appliances)
 	})
@@ -55,10 +55,10 @@ function createListAppliances(datas) {
 }
 
 // création liste ustensiles via la recipeFactory
-function createListUstensils(datas) {
+function createListUstensils(recipes) {
 	let ustensilsListBrut = []
-	datas.forEach((data) => {
-		let listeModel = recipeFactory(data)
+	recipes.forEach((recipe) => {
+		let listeModel = recipeFactory(recipe)
 		const ustensils = listeModel.getUstensiles()
 		ustensilsListBrut.push(...ustensils)
 	})
@@ -76,10 +76,10 @@ function groupLists() {
 	}
 }
 
-function listInit(datas) {
-	createListIngredients(datas)
-	createListAppliances(datas)
-	createListUstensils(datas)
+function listInit(recipes) {
+	createListIngredients(recipes)
+	createListAppliances(recipes)
+	createListUstensils(recipes)
 	groupLists()
 }
 
@@ -142,9 +142,9 @@ function displayFilterList(lists, keyword = null, source = null) {
 			Object.values(filterListCardDOM).forEach((li) => {
 				li.addEventListener('click', (e) => {
 					createTag(e, key)
-					filteredDatas = filterDatas(e.target.value, datas)
-					displayRecipes(filteredDatas)
-					listInit(filteredDatas)
+					filteredRecipes = filterRecipes(e.target.value, recipes)
+					displayRecipes(filteredRecipes)
+					listInit(filteredRecipes)
 					displayFilterList(lists, value, sourceValue)
 				})
 				ulSection.appendChild(li)
@@ -154,9 +154,9 @@ function displayFilterList(lists, keyword = null, source = null) {
 }
 
 async function init() {
-	datas = await getRecipes()
-	displayRecipes(datas)
-	listInit(datas)
+	recipes = await getRecipes()
+	displayRecipes(recipes)
+	listInit(recipes)
 	displayFilterList(lists)
 }
 
@@ -181,16 +181,17 @@ inputs.forEach((input) =>
 			// if (inputSearchBar.className === 'active') {
 			// 	const searchValue = inputSearchBar.value
 			// 	const newValue = optionArray.filter((option) => !option.toString().includes(searchValue))
-			filteredDatas = filterDatas(e.target.value, datas)
-			displayRecipes(filteredDatas)
-			listInit(filteredDatas)
+			// filteredRecipes = filterRecipes(e.target.value, recipes)
+			// displayRecipes(filteredRecipes)
+			// listInit(filteredRecipes)
 			displayFilterList(lists, value, sourceValue)
 			// } else {
 			// }
 		} else {
-			displayRecipes(datas)
-			listInit(datas)
-			displayFilterList(lists)
+			// displayRecipes(recipes)
+			// listInit(recipes)
+			// displayFilterList(lists)
+			init()
 		}
 	})
 )
@@ -202,12 +203,24 @@ searchBar.addEventListener('input', (e) => {
 	const value = e.target.value
 	const recipesSection = document.getElementById('recipes')
 	if (value.length >= 3) {
+		const form = document.querySelector('form')
+		const crossBtn = document.createElement('button')
+		crossBtn.classList.add('search_btn_cross')
+		crossBtn.addEventListener('click', (e) => {
+			console.log(value)
+			value.replace('')
+		})
+		form.appendChild(crossBtn)
+		const crossIcon = document.createElement('i')
+		crossIcon.classList.add('cross', 'fas', 'fa-times')
+		crossBtn.appendChild(crossIcon)
+
 		searchBar.classList.add('active') /** rajouter un style */
-		filteredDatas = filterDatas(e.target.value, datas) // filtre les recettes avec la value de l'input
-		displayRecipes(filteredDatas) // affiche les recettes filtrées
-		listInit(filteredDatas) // réinitialise les listes ingr, app, ustens avec les recettes filtrées
+		filteredRecipes = filterRecipes(e.target.value, recipes) // filtre les recettes avec la value de l'input
+		displayRecipes(filteredRecipes) // affiche les recettes filtrées
+		listInit(filteredRecipes) // réinitialise les listes ingr, app, ustens avec les recettes filtrées
 		displayFilterList(lists, value) // filtre et affiche les listes les listes des recettes filtrées
-		if (filteredDatas.length === 0) {
+		if (filteredRecipes.length === 0) {
 			recipesSection.innerHTML = "Votre recherche n'a pas de correspondance."
 			recipesSection.classList.add('empty')
 		} else {
@@ -215,8 +228,8 @@ searchBar.addEventListener('input', (e) => {
 		}
 	} else {
 		searchBar.classList.remove('active')
-		// displayRecipes(datas)
-		// listInit(datas)
+		// displayRecipes(recipes)
+		// listInit(recipes)
 		// displayFilterList(lists)
 		init()
 		recipesSection.classList.remove('empty')

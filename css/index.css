@@ -29,6 +29,10 @@ img {
   font-family: "Lato";
 }
 
+.active {
+  border: 1px solid #a7a7a7!important;
+}
+
 #search_recipe::placeholder {
   color: #adadad;
 }
@@ -41,6 +45,22 @@ img {
   border: none;
   background-color: #e7e7e7;
 }
+
+.search_btn_cross {
+  font-size: 30px;
+  position: absolute;
+  top: 170px;
+  right: 120px;
+  border: none;
+  background-color: transparent;
+}
+
+.cross {
+  color: #d04f4f;
+  font-size: 25px;
+  cursor: pointer;
+}
+
 
 /* RECIPE SECTION */
 #recipes {

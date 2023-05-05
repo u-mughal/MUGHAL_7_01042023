@@ -167,3 +167,8 @@
   width: 150px;
   cursor: pointer;
 }
+
+.filter_li:hover {
+  font-weight: bolder;
+  width: 155px;
+}
