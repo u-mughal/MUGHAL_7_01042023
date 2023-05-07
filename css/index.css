@@ -44,23 +44,22 @@ img {
   right: 65px;
   border: none;
   background-color: #e7e7e7;
+  padding-bottom: 5px;
 }
 
 .search_btn_cross {
-  font-size: 30px;
-  position: absolute;
-  top: 170px;
-  right: 120px;
-  border: none;
-  background-color: transparent;
-}
-
-.cross {
-  color: #d04f4f;
+  display: none;
   font-size: 25px;
+  position: absolute;
+  top: 175px;
+  right: 120px;
+  color: #d04f4f;
   cursor: pointer;
 }
 
+.search_recipe_length {
+  padding-top: 10px;
+}
 
 /* RECIPE SECTION */
 #recipes {

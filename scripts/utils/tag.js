@@ -1,6 +1,4 @@
-// export function handleTag(e, selectedFilter) {
-// 	createTag(e.target.innerText, selectedFilter)
-// }
+let tagList = []
 
 export function createTag(e, selectedFilter) {
 	const filterTag = document.getElementById('filters_tags')
@@ -29,6 +27,10 @@ export function createTag(e, selectedFilter) {
 	filterList.style.display = 'none'
 	const filterButton = document.getElementById(`filter_btn_${selectedFilter}`)
 	filterButton.style.display = 'block'
+
+	tagList.push(e.target.innerText)
+	console.log(tagList)
+	return tagList
 }
 
 function deleteTag(e) {
@@ -37,6 +39,12 @@ function deleteTag(e) {
 	if (tagDiv.innerHTML === '') {
 		tagDiv.classList.remove('filters_tags_active')
 	}
+	const index = tagList.indexOf(e.target.previousSibling.innerHTML)
+	if (index > -1) {
+		tagList.splice(index, 1)
+	}
+	console.log(tagList)
+	return tagList
 }
 
 // export function filterByTag(e) {

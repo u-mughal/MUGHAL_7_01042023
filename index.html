@@ -34,6 +34,8 @@
           <span id="search_btn_recipe">
             <i class="fas fa-search"></i>
           </span>
+          <p class="search_recipe_length"><span class="search_recipe_number">50</span> recette(s) correspondante(s)</p>
+          <i class="search_btn_cross fas fa-times" aria-hidden="true"></i>
         </form>
 
         <section id="filters">
@@ -48,6 +50,7 @@
               <form id="filter_by_ingredient" class="filter_form">
                 <input type="text" id="input_ingredient" class="filter_input" data-property="ingredient" placeholder="Rechercher un ingrédient">
                 <span class="filter_close trigger"><i class="fa fa-chevron-up"></i></span>
+                <i id="filter_reset_ingredient" class="filter_reset fas fa-times" aria-hidden="true"></i>
               </form>
               <ul id="filter_list_ingredient" class="filter_list ::-webkit-scrollbar"></ul>
             </div>
@@ -60,6 +63,7 @@
               <form id="filter_by_appliance" class="filter_form">
                 <input type="text" id="input_appliance" class="filter_input" data-property="appliance" placeholder="Rechercher un appareil">
                 <span class="filter_close trigger"><i class="fa fa-chevron-up"></i></span>
+                <i id="filter_reset_appliance" class="filter_reset fas fa-times" aria-hidden="true"></i>
               </form>
               <ul id="filter_list_appliance" class="filter_list ::-webkit-scrollbar"></ul>
             </div>
@@ -72,6 +76,7 @@
             <form id="filter_by_ustensil" class="filter_form">
               <input type="text" id="input_ustensil" class="filter_input" data-property="ustensil" placeholder="Rechercher un ustensile">
               <span class="filter_close trigger"><i class="fa fa-chevron-up"></i></span>
+              <i id="filter_reset_ustensil" class="filter_reset fas fa-times" aria-hidden="true"></i>
             </form>
             <ul id="filter_list_ustensil" class="filter_list ::-webkit-scrollbar"></ul>
          </div>

@@ -112,6 +112,16 @@
   outline: none;
 }
 
+.filter_reset {
+  display: none;
+  font-size: 20px;
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  color: #4b3d3da6;
+  cursor: pointer;
+}
+
 .filter_chevron_up {
   position: absolute;
   right: 15px;
@@ -164,7 +174,7 @@
 
 .filter_li {
   color: white;
-  width: 150px;
+  width: 160px;
   cursor: pointer;
 }
 
