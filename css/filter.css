@@ -182,3 +182,12 @@
   font-weight: bolder;
   width: 155px;
 }
+
+.selected {
+ color: #ffffff80;
+ cursor: default ;
+}
+
+.selected:hover {
+  font-weight: normal;
+ }
