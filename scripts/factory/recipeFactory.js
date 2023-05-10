@@ -1,79 +1,111 @@
 export function recipeFactory(recipe) {
 	const { name, ingredients, time, description, appliance, ustensils } = recipe
 
-  // renvoi l'élément HTML d'une recette
-  function getRecipeCard() {
-    const card = document.createElement("article");
-    card.classList.add("recipe_card");
+	// renvoi l'élément HTML d'une recette
+	function getRecipeCard() {
+		const card = document.createElement('article')
+		card.classList.add('recipe_card')
 
-    const html = `
-      <a href="#" class="recipe_link">
-        <div class="recipe_img"></div>
-        <div class="recipe_content">
-          <header class="recipe_header">
-            <h2>${name}</h2>
-            <div class="recipe_time">
-              <i class="far fa-clock"></i>
-              <p class="recipe_minute">${time} min</p>
-            </div>
-          </header>
-          <div class="recipe_details">
-            <div class="recipe_ingredients">
-              <ul class="recipe_ingredients_list">
-                ${ingredients
-                  .map(
-                    (ingredient) => `
-                    <li>
-                      <p class="recipe_ingredient">${ingredient.ingredient}</p>
-                      ${
-                        ingredient.quantity
-                          ? `<p>${ingredient.quantity}${ingredient.unit ? ingredient.unit : ""}</p>`
-                          : ""
-                      }
-                    </li>
-                  `
-                  )
-                  .join("")}
-              </ul>
-            </div>
-            <div class="recipe_description">
-              <p class="recipe_description_text">${description}</p>
-            </div>
-          </div>
-        </div>
-      </a>
-    `;
+		const link = document.createElement('a')
+		link.setAttribute('href', '#')
+		link.classList.add('recipe_link')
+		card.appendChild(link)
 
-    card.insertAdjacentHTML("beforeend", html);
+		const img = document.createElement('div')
+		img.classList.add('recipe_img')
+		link.appendChild(img)
 
-    return card;
-  }
-  
-  // Fonction utilitaire pour formater un tableau de chaînes de caractères en minuscules
-function formatStrings(arr) {
-  return arr.map((str) => str.toLowerCase());
-}
+		const content = document.createElement('div')
+		content.classList.add('recipe_content')
+		link.appendChild(content)
 
-// Fonction pour récupérer les ingrédients d'une recette sous forme de tableau formaté en minuscules
-function getIngredients() {
-  return formatStrings(ingredients.map((ingredient) => ingredient["ingredient"]));
-}
+		const header = document.createElement('header')
+		header.classList.add('recipe_header')
+		content.appendChild(header)
 
-// Fonction pour récupérer les appareils d'une recette formaté en minuscules
-function getAppliances() {
-  return appliance.toLowerCase();
-}
+		const h2 = document.createElement('h2')
+		h2.textContent = name
+		header.appendChild(h2)
 
-// Fonction pour récupérer les ustensiles d'une recette sous forme de tableau formaté en minuscules
-function getUstensiles() {
-  return formatStrings(ustensils);
-}
+		const timing = document.createElement('div')
+		timing.classList.add('recipe_time')
+		header.appendChild(timing)
 
-// Retourne un objet contenant les différentes fonctions utiles pour afficher les cartes de recettes et les données de chaque recette
-return {
-  getRecipeCard,
-  getIngredients,
-  getAppliances,
-  getUstensiles
-};
+		const clock = document.createElement('i')
+		clock.classList.add('far', 'fa-clock')
+		timing.appendChild(clock)
+
+		const minute = document.createElement('p')
+		minute.classList.add('recipe_minute')
+		minute.textContent = `${time} min`
+		timing.appendChild(minute)
+
+		const details = document.createElement('div')
+		details.classList.add('recipe_details')
+		content.appendChild(details)
+
+		const recipeIngredients = document.createElement('div')
+		recipeIngredients.classList.add('recipe_ingredients')
+		details.appendChild(recipeIngredients)
+
+		const ingredientsList = document.createElement('ul')
+		ingredientsList.classList.add('recipe_ingredients_list')
+		recipeIngredients.appendChild(ingredientsList)
+
+		ingredients.forEach((ingredient) => {
+			const food = document.createElement('li')
+			food.classList.add('li_recipe')
+
+			const foodIngd = document.createElement('p')
+			foodIngd.classList.add('recipe_ingredient')
+			foodIngd.textContent = `${ingredient['ingredient']}`
+			food.appendChild(foodIngd)
+
+			const foodQty = document.createElement('p')
+			if (('ingredient' in ingredient) & ('quantity' in ingredient) & ('unit' in ingredient)) {
+				foodQty.textContent = `: ${ingredient['quantity']}${ingredient['unit']}`
+			} else if (('ingredient' in ingredient) & ('quantity' in ingredient)) {
+				foodQty.textContent = `: ${ingredient['quantity']}`
+			}
+			food.appendChild(foodQty)
+			ingredientsList.appendChild(food)
+		})
+
+		const recipeDescription = document.createElement('div')
+		recipeDescription.classList.add('recipe_description')
+		details.appendChild(recipeDescription)
+
+		const descriptionText = document.createElement('p')
+		descriptionText.classList.add('recipe_description_text')
+		descriptionText.textContent = description.slice(0, 150) + '...'
+		recipeDescription.appendChild(descriptionText)
+
+		return card
+	}
+
+	// renvoi les ingrédients d'une recette
+	function getIngredients() {
+		const formatedIngredients = []
+		ingredients.forEach((ingredient) => {
+			formatedIngredients.push(ingredient['ingredient'].toLowerCase())
+		})
+		return formatedIngredients
+	}
+
+	// renvoi les appareils d'une recette
+	function getAppliances() {
+		const formatedAppliance = appliance.toLowerCase()
+		return formatedAppliance
+	}
+
+	// renvoi les ustensiles d'une recette
+	function getUstensiles() {
+		const formatedUstensils = []
+		ustensils.forEach((ustensil) => {
+			formatedUstensils.push(ustensil.toLowerCase())
+		})
+		return formatedUstensils
+	}
+
+	return { getRecipeCard, getIngredients, getAppliances, getUstensiles }
 }

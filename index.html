@@ -34,17 +34,16 @@
           <span id="search_btn_recipe">
             <i class="fas fa-search"></i>
           </span>
-          <p class="search_recipe_length"><span class="search_recipe_number">50</span> recette(s) correspondante(s)</p>
           <i class="search_btn_cross fas fa-times" aria-hidden="true"></i>
         </form>
 
         <section id="filters">
           <div id="filters_tags"></div>
-          <div id="filters_buttons">
 
+          <div id="filters_buttons">
             <div id="filter_by_ingredient" class="filter">
               <button id="filter_btn_ingredient" class="filter_btn trigger">
-                <span>Ingrédients</span>
+                <span class="filter_btn_option">Ingrédients</span>
                 <span class="filter_chevron_up"><i class="fas fa-chevron-down"></i></span>
               </button>
               <form id="filter_by_ingredient" class="filter_form">
@@ -52,12 +51,12 @@
                 <span class="filter_close trigger"><i class="fa fa-chevron-up"></i></span>
                 <i id="filter_reset_ingredient" class="filter_reset fas fa-times" aria-hidden="true"></i>
               </form>
-              <ul id="filter_list_ingredient" class="filter_list ::-webkit-scrollbar"></ul>
+              <ul id="filter_list_ingredient" class="filter_list scrollbar"></ul>
             </div>
 
             <div id="filter_by_appliance" class="filter">
               <button id="filter_btn_appliance" class="filter_btn trigger">
-                <span>Appareils</span>
+                <span class="filter_btn_option">Appareils</span>
                 <span class="filter_chevron_up"><i class="fas fa-chevron-down"></i></span>
               </button>
               <form id="filter_by_appliance" class="filter_form">
@@ -65,23 +64,24 @@
                 <span class="filter_close trigger"><i class="fa fa-chevron-up"></i></span>
                 <i id="filter_reset_appliance" class="filter_reset fas fa-times" aria-hidden="true"></i>
               </form>
-              <ul id="filter_list_appliance" class="filter_list ::-webkit-scrollbar"></ul>
+              <ul id="filter_list_appliance" class="filter_list scrollbar"></ul>
             </div>
 
-          <div id="filter_by_ustensil" class="filter">
-            <button id="filter_btn_ustensil" class="filter_btn trigger">
-              <span>Ustensiles</span>
-              <span class="filter_chevron_up"><i class="fas fa-chevron-down"></i></span>
-            </button>
-            <form id="filter_by_ustensil" class="filter_form">
-              <input type="text" id="input_ustensil" class="filter_input" data-property="ustensil" placeholder="Rechercher un ustensile">
-              <span class="filter_close trigger"><i class="fa fa-chevron-up"></i></span>
-              <i id="filter_reset_ustensil" class="filter_reset fas fa-times" aria-hidden="true"></i>
-            </form>
-            <ul id="filter_list_ustensil" class="filter_list ::-webkit-scrollbar"></ul>
-         </div>
-
+            <div id="filter_by_ustensil" class="filter">
+              <button id="filter_btn_ustensil" class="filter_btn trigger">
+                <span class="filter_btn_option">Ustensiles</span>
+                <span class="filter_chevron_up"><i class="fas fa-chevron-down"></i></span>
+              </button>
+              <form id="filter_by_ustensil" class="filter_form">
+                <input type="text" id="input_ustensil" class="filter_input" data-property="ustensil" placeholder="Rechercher un ustensile">
+                <span class="filter_close trigger"><i class="fa fa-chevron-up"></i></span>
+                <i id="filter_reset_ustensil" class="filter_reset fas fa-times" aria-hidden="true"></i>
+              </form>
+              <ul id="filter_list_ustensil" class="filter_list scrollbar"></ul>
+            </div>
           </div>
+          
+          <p class="search_recipe_length"><span class="search_recipe_number">50</span> recette(s) correspondante(s)</p>
         </section>
       </section>
 

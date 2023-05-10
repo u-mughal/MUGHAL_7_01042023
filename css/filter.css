@@ -54,7 +54,6 @@
   position: relative;
 }
 
-/* filter_list >> filter_form */
 .filter_btn,
 .filter_form {
   color: white;
@@ -134,7 +133,6 @@
   right: 15px;
 }
 
-/* list_option >> filter_list */
 .filter_list{
   display: none;
   flex-direction: column;
@@ -150,25 +148,21 @@
   overflow-x: scroll;
 }
 
-/* width */
-::-webkit-scrollbar {
+.scrollbar::-webkit-scrollbar {
   width: 5px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
+.scrollbar::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px rgb(255, 254, 254);
   border-radius: 10px;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
+.scrollbar::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.562);
   border-radius: 10px;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.795);
 }
 

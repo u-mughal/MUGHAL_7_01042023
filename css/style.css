@@ -8,3 +8,9 @@ body {
   font-family: "Lato";
   font-size: 18px;
 }
+
+@media screen and (min-width: 1024px) {
+  #recipes {
+   column-gap: 2%;
+ }
+}

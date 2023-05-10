@@ -173,7 +173,8 @@ searchBar.addEventListener('input', (e) => {
 		searchBarKeyword.push(value)
 
 		if (filteredRecipes.length === 0) {
-			recipesSection.innerHTML = "Votre recherche n'a pas de correspondance."
+			recipesSection.innerHTML =
+				'Aucune recette ne correspond à votre recherche.<br/> Essayez quiche lorraine, chocolat noir, cocotte minute...'
 			recipesSection.classList.add('empty')
 		} else {
 			recipesSection.classList.remove('empty')
@@ -280,6 +281,13 @@ function initResetInput(e) {
 	})
 }
 
+// désactivation de la touche Enter dans les inputs des filtres
+inputsFilter.forEach((input) => {
+	input.addEventListener('keydown', (e) => {
+		e.key === 'Enter' && e.preventDefault()
+	})
+})
+
 //------------------------------------------------------------------------------------------
 // Gestion des tags
 let tagList = []
@@ -316,6 +324,9 @@ function createTag(e, selectedFilter) {
 
 	// ajoute le tag dans tagList
 	tagList.push(e.target.innerText)
+	// supprime croix reset dans l'input du filtre
+	const resetFilter = document.getElementById(`filter_reset_${selectedFilter}`)
+	resetFilter.style.display = 'none'
 	// concatene les 2 tableaux de keyword
 	globalKeyword = searchBarKeyword.concat(tagList)
 	filterByKeyword(recipes, globalKeyword)
