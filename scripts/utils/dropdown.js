@@ -23,6 +23,6 @@ export function toggleDropDown(e) {
 		const inputSelected = e.currentTarget.nextElementSibling[0]
 		inputSelected.classList.add('filter_input_active')
 		const listSelected = e.currentTarget.nextElementSibling.nextElementSibling
-		listSelected.style.display = 'flex'
+		listSelected.style.display = 'grid'
 	}
 }

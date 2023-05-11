@@ -3,7 +3,6 @@ import { recipeFactory } from './factory/recipeFactory.js'
 import { filterFactory } from './factory/filterFactory.js'
 import { filterRecipes, sortRecipes } from './utils/filterAlgo.js'
 import { toggleDropDown } from './utils/dropdown.js'
-// import { filterByTag } from './utils/tag.js'
 
 // déclaration variables
 let recipes = []
@@ -13,6 +12,9 @@ let ustensilsList = []
 let lists = []
 let filteredRecipes = []
 let searchBarKeyword = []
+let tagList = []
+let globalKeyword = []
+let filteredRecipesByTag = []
 
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(recipes) {
@@ -98,7 +100,7 @@ function displayFilterList(lists, keyword = null) {
 			// on postionne un eventlistener sur chaque option de filtre li
 			Object.values(filterListCardDOM).forEach((li) => {
 				li.addEventListener('click', (e) => {
-					createTag(e, filterName, recipes)
+					createTag(e, filterName)
 				})
 				ulSection.appendChild(li)
 			})
@@ -122,7 +124,7 @@ function displayFilterList(lists, keyword = null) {
 			// on postionne un eventlistener sur chaque option de filtre li
 			Object.values(filterListCardDOM).forEach((li) => {
 				li.addEventListener('click', (e) => {
-					createTag(e, filterName, recipes)
+					createTag(e, filterName)
 				})
 				ulSection.appendChild(li)
 			})
@@ -197,6 +199,18 @@ function initResetSearchbar() {
 		searchBarForm.reset()
 		searchBar.classList.remove('active')
 		cross.style.display = 'none'
+		// si tag actif, suppression
+		if (globalKeyword !== '') {
+			globalKeyword = []
+			const tags = document.querySelectorAll('.filter_tag_div')
+			tags.forEach((tag) => {
+				tag.remove()
+			})
+			const tagDiv = document.getElementById('filters_tags')
+			if (tagDiv.innerHTML === '') {
+				tagDiv.classList.remove('filters_tags_active')
+			}
+		}
 		init()
 		searchBar.classList.remove('active')
 		recipesSection.classList.remove('empty')
@@ -290,10 +304,6 @@ inputsFilter.forEach((input) => {
 
 //------------------------------------------------------------------------------------------
 // Gestion des tags
-let tagList = []
-let globalKeyword = []
-let filteredRecipesByTag = []
-
 function createTag(e, selectedFilter) {
 	const filterTag = document.getElementById('filters_tags')
 	filterTag.classList.add('filters_tags_active')

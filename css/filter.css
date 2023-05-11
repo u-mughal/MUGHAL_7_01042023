@@ -11,6 +11,7 @@
 #filters_tags {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .filters_tags_active {
@@ -134,11 +135,10 @@
 }
 
 .filter_list{
-  display: none;
-  flex-direction: column;
-  flex-wrap: wrap;
-  column-gap: 70px;
-  row-gap: 10px;
+  display: none; 
+  grid-auto-flow: column; 
+  grid-template-rows: repeat(10, 1fr); 
+  gap: 10px 40px; 
   position: absolute;
   height: 397px;
   width: 667px;
@@ -146,10 +146,11 @@
   padding: 0 16px 19px;
   border-radius: 0 0 5px 5px;
   overflow-x: scroll;
+  z-index: 99;
 }
 
 .scrollbar::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
 }
 
 .scrollbar::-webkit-scrollbar-track {
@@ -168,7 +169,10 @@
 
 .filter_li {
   color: white;
-  width: 160px;
+  width: 180px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -184,4 +188,4 @@
 
 .selected:hover {
   font-weight: normal;
- }
+}
