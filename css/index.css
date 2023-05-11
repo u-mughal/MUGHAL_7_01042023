@@ -51,7 +51,7 @@ box-shadow: 0px 0px 10px 1px rgb(211, 211, 211) inset;
   top: 18px;
   right: 30px;
   border: none;
-  background-color: #e7e7e7;
+  background-color: transparent;
   padding-bottom: 5px;
 }
 
@@ -59,7 +59,7 @@ box-shadow: 0px 0px 10px 1px rgb(211, 211, 211) inset;
   display: none;
   font-size: 25px;
   position: absolute;
-  top: 175px;
+  top: 25px;
   right: 120px;
   color: #d04f4f;
   cursor: pointer;
@@ -78,6 +78,7 @@ box-shadow: 0px 0px 10px 1px rgb(211, 211, 211) inset;
 }
 
 .empty {
+  display: block!important;
   font-size: 20px;
   justify-content: center!important;
   text-align: center;

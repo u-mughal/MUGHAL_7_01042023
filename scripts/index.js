@@ -195,27 +195,34 @@ searchBar.addEventListener('input', (e) => {
 // gestion du reset de la barre de recherche
 function initResetSearchbar() {
 	cross.style.display = 'block'
-	cross.addEventListener('click', () => {
-		searchBarForm.reset()
-		searchBar.classList.remove('active')
-		cross.style.display = 'none'
-		// si tag actif, suppression
-		if (globalKeyword !== '') {
-			globalKeyword = []
-			const tags = document.querySelectorAll('.filter_tag_div')
-			tags.forEach((tag) => {
-				tag.remove()
-			})
-			const tagDiv = document.getElementById('filters_tags')
-			if (tagDiv.innerHTML === '') {
-				tagDiv.classList.remove('filters_tags_active')
-			}
-		}
-		init()
-		searchBar.classList.remove('active')
+	cross.addEventListener('click', () => resetSearchbar())
+}
+
+function resetSearchbar() {
+	searchBarForm.reset()
+	searchBar.classList.remove('active')
+	cross.style.display = 'none'
+	// si tag actif, suppression
+	if (globalKeyword.length != 0) {
+		tagList = []
+		globalKeyword = []
+		filteredRecipesByTag = []
+		const tags = document.querySelectorAll('.filter_tag_div')
+		tags.forEach((tag) => {
+			tag.remove()
+		})
+		const tagDiv = document.getElementById('filters_tags')
+		tagDiv.classList.remove('filters_tags_active')
+	}
+	searchBarKeyword = []
+	filteredRecipes = []
+	displayRecipes(recipes)
+	listInit(recipes)
+	displayFilterList(lists)
+	if (recipesSection.classList == 'empty') {
 		recipesSection.classList.remove('empty')
-		document.querySelector('.search_recipe_number').textContent = '50'
-	})
+	}
+	document.querySelector('.search_recipe_number').textContent = '50'
 }
 
 //------------------------------------------------------------------------------------------
