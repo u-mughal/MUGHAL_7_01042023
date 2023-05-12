@@ -91,6 +91,9 @@ body {
     text-overflow: ellipsis;
     padding-right: 70px;
   }
+  .search_btn_cross {
+    right: 75px;
+  }
   #search_btn_recipe {
     font-size: 25px;
     top: 20px;

@@ -1,7 +1,6 @@
 let filteredRecipes = []
 
 export function filterRecipes(value, recipes) {
-	filteredRecipes.innerHTML = ''
 	const inputFormated = value
 		.toLowerCase()
 		.normalize('NFD')
@@ -13,24 +12,13 @@ export function filterRecipes(value, recipes) {
 				.normalize('NFD')
 				.replace(/[\u0300-\u036f]/g, '')
 				.includes(inputFormated) ||
-			recipe.ingredients
-				.map((ingredients) => ingredients.ingredient)
-				.toString()
-				.toLowerCase()
-				.normalize('NFD')
-				.replace(/[\u0300-\u036f]/g, '')
-				.includes(inputFormated) ||
 			recipe.description
 				.toLowerCase()
 				.normalize('NFD')
 				.replace(/[\u0300-\u036f]/g, '')
 				.includes(inputFormated) ||
-			recipe.appliance
-				.toLowerCase()
-				.normalize('NFD')
-				.replace(/[\u0300-\u036f]/g, '')
-				.includes(inputFormated) ||
-			recipe.ustensils
+			recipe.ingredients
+				.map((ingredients) => ingredients.ingredient)
 				.toString()
 				.toLowerCase()
 				.normalize('NFD')
