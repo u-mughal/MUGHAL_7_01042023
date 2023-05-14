@@ -23,6 +23,17 @@ export function filterRecipes(value, recipes) {
 				.toLowerCase()
 				.normalize('NFD')
 				.replace(/[\u0300-\u036f]/g, '')
+				.includes(inputFormated) ||
+			recipe.appliance
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.includes(inputFormated) ||
+			recipe.ustensils
+				.toString()
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
 				.includes(inputFormated)
 	)
 	sortRecipes(filteredRecipes)
