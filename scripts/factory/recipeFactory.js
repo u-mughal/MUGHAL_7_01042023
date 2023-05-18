@@ -2,7 +2,7 @@ export function recipeFactory(recipe) {
 	const { name, ingredients, time, description, appliance, ustensils } = recipe
 
 	// renvoi l'élément HTML d'une recette
-	function getRecipeCard() {
+	function getRecipeCardDOM() {
 		const card = document.createElement('article')
 		card.classList.add('recipe_card')
 
@@ -107,5 +107,5 @@ export function recipeFactory(recipe) {
 		return formatedUstensils
 	}
 
-	return { getRecipeCard, getIngredients, getAppliances, getUstensiles }
+	return { getRecipeCardDOM, getIngredients, getAppliances, getUstensiles }
 }

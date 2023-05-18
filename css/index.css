@@ -117,6 +117,7 @@ box-shadow: 0px 0px 10px 1px rgb(211, 211, 211) inset;
 }
 
 .recipe_header {
+  text-align: start;
   display: flex;
   justify-content: space-between;
   text-align: start;
