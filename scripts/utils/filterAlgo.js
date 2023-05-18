@@ -13,29 +13,26 @@ export function filterRecipes(value, recipes) {
 		const recipeName = format(recipe.name)
 		const recipeDescription = format(recipe.description)
 		const recipeAppliance = format(recipe.appliance)
-		// pour chaque recette, on va comparer le nom à l'input
+
 		if (recipeName.includes(keyword)) {
 			const checkId = filteredRecipes.some((filteredRecipe) => filteredRecipe.id === recipe.id)
 			if (!checkId) {
 				filteredRecipes.push(recipe)
 			}
-			// pour chaque recette, on va comparer la description à l'input
 		} else if (recipeDescription.includes(keyword)) {
 			const checkId = filteredRecipes.some((filteredRecipe) => filteredRecipe.id === recipe.id)
 			if (!checkId) {
 				filteredRecipes.push(recipe)
 			}
-			// pour chaque recette, on va comparer les appareils à l'input
 		} else if (recipeAppliance.includes(keyword)) {
 			const checkId = filteredRecipes.some((filteredRecipe) => filteredRecipe.id === recipe.id)
 			if (!checkId) {
 				filteredRecipes.push(recipe)
 			}
 		} else {
-			// pour chaque recette, on va comparer les ingrédients à l'input
-			const ingredientsArr = recipe.ingredients
-			for (let j = 0; j < ingredientsArr.length; j++) {
-				const recipeIngredients = format(ingredientsArr[j].ingredient)
+			const ingredientsArray = recipe.ingredients
+			for (let j = 0; j < ingredientsArray.length; j++) {
+				const recipeIngredients = format(ingredientsArray[j].ingredient)
 				if (recipeIngredients.includes(keyword)) {
 					const checkId = filteredRecipes.some((filteredRecipe) => filteredRecipe.id === recipe.id)
 					if (!checkId) {
@@ -43,10 +40,10 @@ export function filterRecipes(value, recipes) {
 					}
 				}
 			}
-			// pour chaque recette, on va comparer les ustensils à l'input
-			const ustensilsArr = recipe.ustensils
-			for (let i = 0; i < ustensilsArr.length; i++) {
-				const recipeUstensils = format(ustensilsArr[i])
+
+			const ustensilsArray = recipe.ustensils
+			for (let i = 0; i < ustensilsArray.length; i++) {
+				const recipeUstensils = format(ustensilsArray[i])
 				if (recipeUstensils.includes(keyword)) {
 					const checkId = filteredRecipes.some((filteredRecipe) => filteredRecipe.id === recipe.id)
 					if (!checkId) {
