@@ -26,13 +26,13 @@ const inputsFilter = document.querySelectorAll('.filter_input')
 
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(recipes) {
-	sortRecipes(recipes)
+	sortRecipes(recipes, `name`)
 	const recipesSection = document.getElementById('recipes')
 	recipesSection.innerHTML = ''
 
 	recipes.forEach((recipe) => {
 		let recipeModel = recipeFactory(recipe)
-		const recipeCardDOM = recipeModel.getRecipeCard()
+		const recipeCardDOM = recipeModel.getRecipeCardDOM()
 		recipesSection.appendChild(recipeCardDOM)
 	})
 }
