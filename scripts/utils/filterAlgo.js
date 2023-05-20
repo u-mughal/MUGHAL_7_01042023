@@ -70,148 +70,148 @@ export function sortRecipes(array, key) {
 	}
 }
 
-// Algo verion sameId not dry
-export function filterRecipes(value, recipes) {
-	filteredRecipes = []
-	const inputFormated = format(value)
+// Algo verSion sameId not DRY
+// export function filterRecipes(value, recipes) {
+// 	filteredRecipes = []
+// 	const inputFormated = format(value)
 
-	for (let i = 0; i < recipes.length; i++) {
-		const recipe = recipes[i]
-		const recipeName = format(recipe.name)
-		const recipeDescription = format(recipe.description)
-		const recipeAppliance = format(recipe.appliance)
+// 	for (let i = 0; i < recipes.length; i++) {
+// 		const recipe = recipes[i]
+// 		const recipeName = format(recipe.name)
+// 		const recipeDescription = format(recipe.description)
+// 		const recipeAppliance = format(recipe.appliance)
 
-		if (recipeName.includes(inputFormated)) {
-			if (filteredRecipes.length !== 0) {
-				let sameRecipeId = false
-				for (let i = 0; i < filteredRecipes.length; i++) {
-					if (filteredRecipes[i].id === recipe.id) {
-						sameRecipeId = true
-						break
-					}
-				}
-				if (!sameRecipeId) {
-					filteredRecipes.push(recipe)
-				}
-			} else {
-				filteredRecipes.push(recipe)
-			}
-		} else if (recipeDescription.includes(inputFormated)) {
-			if (filteredRecipes.length !== 0) {
-				let sameRecipeId = false
-				for (let i = 0; i < filteredRecipes.length; i++) {
-					if (filteredRecipes[i].id === recipe.id) {
-						sameRecipeId = true
-						break
-					}
-				}
-				if (!sameRecipeId) {
-					filteredRecipes.push(recipe)
-				}
-			} else {
-				filteredRecipes.push(recipe)
-			}
-		} else if (recipeAppliance.includes(inputFormated)) {
-			if (filteredRecipes.length !== 0) {
-				let sameRecipeId = false
-				for (let i = 0; i < filteredRecipes.length; i++) {
-					if (filteredRecipes[i].id === recipe.id) {
-						sameRecipeId = true
-						break
-					}
-				}
-				if (!sameRecipeId) {
-					filteredRecipes.push(recipe)
-				}
-			} else {
-				filteredRecipes.push(recipe)
-			}
-		} else {
-			const ingredientsArray = recipe.ingredients
-			for (let j = 0; j < ingredientsArray.length; j++) {
-				const recipeIngredients = format(ingredientsArray[j].ingredient)
-				if (recipeIngredients.includes(inputFormated)) {
-					if (filteredRecipes.length !== 0) {
-						let sameRecipeId = false
-						for (let i = 0; i < filteredRecipes.length; i++) {
-							if (filteredRecipes[i].id === recipe.id) {
-								sameRecipeId = true
-								break
-							}
-						}
-						if (!sameRecipeId) {
-							filteredRecipes.push(recipe)
-						}
-					} else {
-						filteredRecipes.push(recipe)
-					}
-				}
-			}
+// 		if (recipeName.includes(inputFormated)) {
+// 			if (filteredRecipes.length !== 0) {
+// 				let sameRecipeId = false
+// 				for (let i = 0; i < filteredRecipes.length; i++) {
+// 					if (filteredRecipes[i].id === recipe.id) {
+// 						sameRecipeId = true
+// 						break
+// 					}
+// 				}
+// 				if (!sameRecipeId) {
+// 					filteredRecipes.push(recipe)
+// 				}
+// 			} else {
+// 				filteredRecipes.push(recipe)
+// 			}
+// 		} else if (recipeDescription.includes(inputFormated)) {
+// 			if (filteredRecipes.length !== 0) {
+// 				let sameRecipeId = false
+// 				for (let i = 0; i < filteredRecipes.length; i++) {
+// 					if (filteredRecipes[i].id === recipe.id) {
+// 						sameRecipeId = true
+// 						break
+// 					}
+// 				}
+// 				if (!sameRecipeId) {
+// 					filteredRecipes.push(recipe)
+// 				}
+// 			} else {
+// 				filteredRecipes.push(recipe)
+// 			}
+// 		} else if (recipeAppliance.includes(inputFormated)) {
+// 			if (filteredRecipes.length !== 0) {
+// 				let sameRecipeId = false
+// 				for (let i = 0; i < filteredRecipes.length; i++) {
+// 					if (filteredRecipes[i].id === recipe.id) {
+// 						sameRecipeId = true
+// 						break
+// 					}
+// 				}
+// 				if (!sameRecipeId) {
+// 					filteredRecipes.push(recipe)
+// 				}
+// 			} else {
+// 				filteredRecipes.push(recipe)
+// 			}
+// 		} else {
+// 			const ingredientsArray = recipe.ingredients
+// 			for (let j = 0; j < ingredientsArray.length; j++) {
+// 				const recipeIngredients = format(ingredientsArray[j].ingredient)
+// 				if (recipeIngredients.includes(inputFormated)) {
+// 					if (filteredRecipes.length !== 0) {
+// 						let sameRecipeId = false
+// 						for (let i = 0; i < filteredRecipes.length; i++) {
+// 							if (filteredRecipes[i].id === recipe.id) {
+// 								sameRecipeId = true
+// 								break
+// 							}
+// 						}
+// 						if (!sameRecipeId) {
+// 							filteredRecipes.push(recipe)
+// 						}
+// 					} else {
+// 						filteredRecipes.push(recipe)
+// 					}
+// 				}
+// 			}
 
-			const ustensilsArray = recipe.ustensils
-			for (let i = 0; i < ustensilsArray.length; i++) {
-				const recipeUstensils = format(ustensilsArray[i])
-				if (recipeUstensils.includes(inputFormated)) {
-					if (filteredRecipes.length !== 0) {
-						let sameRecipeId = false
-						for (let i = 0; i < filteredRecipes.length; i++) {
-							if (filteredRecipes[i].id === recipe.id) {
-								sameRecipeId = true
-								break
-							}
-						}
-						if (!sameRecipeId) {
-							filteredRecipes.push(recipe)
-						}
-					} else {
-						filteredRecipes.push(recipe)
-					}
-				}
-			}
-		}
-	}
-	sortRecipes(recipes, `name`)
-	return filteredRecipes
-}
+// 			const ustensilsArray = recipe.ustensils
+// 			for (let i = 0; i < ustensilsArray.length; i++) {
+// 				const recipeUstensils = format(ustensilsArray[i])
+// 				if (recipeUstensils.includes(inputFormated)) {
+// 					if (filteredRecipes.length !== 0) {
+// 						let sameRecipeId = false
+// 						for (let i = 0; i < filteredRecipes.length; i++) {
+// 							if (filteredRecipes[i].id === recipe.id) {
+// 								sameRecipeId = true
+// 								break
+// 							}
+// 						}
+// 						if (!sameRecipeId) {
+// 							filteredRecipes.push(recipe)
+// 						}
+// 					} else {
+// 						filteredRecipes.push(recipe)
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// 	sortRecipes(recipes, `name`)
+// 	return filteredRecipes
+// }
 
-// Algo version isIdSame refacto
-export function filterRecipes(value, recipes) {
-	filteredRecipes = []
-	const inputFormated = format(value)
+// Algo version isIdSame DRY
+// export function filterRecipes(value, recipes) {
+// 	filteredRecipes = []
+// 	const inputFormated = format(value)
 
-	for (let i = 0; i < recipes.length; i++) {
-		const recipe = recipes[i]
-		const recipeName = format(recipe.name)
-		const recipeDescription = format(recipe.description)
-		const recipeAppliance = format(recipe.appliance)
+// 	for (let i = 0; i < recipes.length; i++) {
+// 		const recipe = recipes[i]
+// 		const recipeName = format(recipe.name)
+// 		const recipeDescription = format(recipe.description)
+// 		const recipeAppliance = format(recipe.appliance)
 
-		if (recipeName.includes(inputFormated)) {
-			isIdSame(recipe)
-		} else if (recipeDescription.includes(inputFormated)) {
-			isIdSame(recipe)
-		} else if (recipeAppliance.includes(inputFormated)) {
-			isIdSame(recipe)
-		} else {
-			const ingredientsArray = recipe.ingredients
-			for (let j = 0; j < ingredientsArray.length; j++) {
-				const recipeIngredients = format(ingredientsArray[j].ingredient)
-				if (recipeIngredients.includes(inputFormated)) {
-					isIdSame(recipe)
-				}
-			}
+// 		if (recipeName.includes(inputFormated)) {
+// 			isIdSame(recipe)
+// 		} else if (recipeDescription.includes(inputFormated)) {
+// 			isIdSame(recipe)
+// 		} else if (recipeAppliance.includes(inputFormated)) {
+// 			isIdSame(recipe)
+// 		} else {
+// 			const ingredientsArray = recipe.ingredients
+// 			for (let j = 0; j < ingredientsArray.length; j++) {
+// 				const recipeIngredients = format(ingredientsArray[j].ingredient)
+// 				if (recipeIngredients.includes(inputFormated)) {
+// 					isIdSame(recipe)
+// 				}
+// 			}
 
-			const ustensilsArray = recipe.ustensils
-			for (let i = 0; i < ustensilsArray.length; i++) {
-				const recipeUstensils = format(ustensilsArray[i])
-				if (recipeUstensils.includes(inputFormated)) {
-					isIdSame(recipe)
-				}
-			}
-		}
-	}
-	sortRecipes(recipes, `name`)
-	return filteredRecipes
-}
+// 			const ustensilsArray = recipe.ustensils
+// 			for (let i = 0; i < ustensilsArray.length; i++) {
+// 				const recipeUstensils = format(ustensilsArray[i])
+// 				if (recipeUstensils.includes(inputFormated)) {
+// 					isIdSame(recipe)
+// 				}
+// 			}
+// 		}
+// 	}
+// 	sortRecipes(recipes, `name`)
+// 	return filteredRecipes
+// }
 
 // function isIdSame(recipe) {
 // 	if (filteredRecipes.length !== 0) {
