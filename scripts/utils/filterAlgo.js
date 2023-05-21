@@ -1,4 +1,4 @@
-import { format } from '../index.js'
+import { format } from './format.js'
 
 // déclaration variable
 let filteredRecipes = []

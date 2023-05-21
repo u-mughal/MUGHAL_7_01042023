@@ -3,6 +3,7 @@ import { recipeFactory } from './factory/recipeFactory.js'
 import { filterFactory } from './factory/filterFactory.js'
 import { filterRecipes, sortRecipes } from './utils/filterAlgo.js'
 import { toggleDropDown } from './utils/dropdown.js'
+import { format } from './utils/format.js'
 
 // déclaration variables
 let recipes = []
@@ -310,45 +311,46 @@ inputsFilter.forEach((input) => {
 
 //------------------------------------------------------------------------------------------
 // Gestion des tags
-
 function createTag(e, selectedFilter) {
-	const filterTag = document.getElementById('filters_tags')
-	filterTag.classList.add('filters_tags_active')
+	if (!e.target.className.includes('selected')) {
+		const filterTag = document.getElementById('filters_tags')
+		filterTag.classList.add('filters_tags_active')
 
-	const tagDiv = document.createElement('div')
-	tagDiv.classList.add('filter_tag_div')
-	tagDiv.classList.add(`color_tag_${selectedFilter}`)
-	filterTag.appendChild(tagDiv)
+		const tagDiv = document.createElement('div')
+		tagDiv.classList.add('filter_tag_div')
+		tagDiv.classList.add(`color_tag_${selectedFilter}`)
+		filterTag.appendChild(tagDiv)
 
-	const tag = document.createElement('p')
-	tag.classList.add('filter_tag_p')
-	tag.textContent = e.target.innerText
-	tagDiv.appendChild(tag)
+		const tag = document.createElement('p')
+		tag.classList.add('filter_tag_p')
+		tag.textContent = e.target.innerText
+		tagDiv.appendChild(tag)
 
-	const tagIcon = document.createElement('i')
-	tagIcon.classList.add('far', 'fa-times-circle')
-	tagIcon.addEventListener('click', (e) => deleteTag(e))
-	tagDiv.appendChild(tagIcon)
+		const tagIcon = document.createElement('i')
+		tagIcon.classList.add('far', 'fa-times-circle')
+		tagIcon.addEventListener('click', (e) => deleteTag(e))
+		tagDiv.appendChild(tagIcon)
 
-	const filterInput = document.getElementById(`input_${selectedFilter}`)
-	filterInput.value = ''
-	const filterListInput = document.getElementById(`filter_by_${selectedFilter}`)
-	filterListInput.style.display = 'none'
-	const filterList = document.getElementById(`filter_list_${selectedFilter}`)
-	filterList.style.display = 'none'
-	const filterButton = document.getElementById(`filter_btn_${selectedFilter}`)
-	filterButton.style.display = 'block'
+		const filterInput = document.getElementById(`input_${selectedFilter}`)
+		filterInput.value = ''
+		const filterListInput = document.getElementById(`filter_by_${selectedFilter}`)
+		filterListInput.style.display = 'none'
+		const filterList = document.getElementById(`filter_list_${selectedFilter}`)
+		filterList.style.display = 'none'
+		const filterButton = document.getElementById(`filter_btn_${selectedFilter}`)
+		filterButton.style.display = 'block'
 
-	// ajoute le tag dans tagList
-	tagList.push(e.target.innerText)
+		// ajoute le tag dans tagList
+		tagList.push(e.target.innerText)
 
-	// supprime croix reset dans l'input du filtre
-	const resetFilter = document.getElementById(`filter_reset_${selectedFilter}`)
-	resetFilter.style.display = 'none'
+		// supprime croix reset dans l'input du filtre
+		const resetFilter = document.getElementById(`filter_reset_${selectedFilter}`)
+		resetFilter.style.display = 'none'
 
-	// concatène les 2 tableaux de keyword
-	globalKeyword = searchBarKeyword.concat(tagList)
-	filterByTag(recipes, globalKeyword)
+		// concatène les 2 tableaux de keyword
+		globalKeyword = searchBarKeyword.concat(tagList)
+		filterByTag(recipes, globalKeyword)
+	}
 }
 
 function deleteTag(e) {
@@ -403,14 +405,4 @@ function tagSectionReset() {
 
 	const tagDiv = document.getElementById('filters_tags')
 	tagDiv.classList.remove('filters_tags_active')
-}
-
-//------------------------------------------------------------------------------------------
-// Formatage des éléments
-export function format(e) {
-	const formattedElement = e
-		.toLowerCase()
-		.normalize('NFD')
-		.replace(/[\u0300-\u036f]/g, '')
-	return formattedElement
 }
