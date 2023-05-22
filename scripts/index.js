@@ -1,6 +1,6 @@
 import { getRecipes } from './api/services.js'
 import { recipeFactory } from './factory/recipeFactory.js'
-import { filterFactory } from './factory/filterFactory.js'
+import { createFilterList } from './factory/createFilterList.js'
 import { filterRecipes, sortRecipes } from './utils/filterAlgo.js'
 import { toggleDropDown } from './utils/dropdown.js'
 
@@ -100,16 +100,16 @@ function listInit(recipes) {
 	groupLists()
 }
 
-//génération des listes de filtres via la filterFactory
+//génération des listes de filtres via la createFilterList
 function displayFilterList(lists, keyword = null) {
 	// pour chaque filtre Ing, App, Usten
 	for (const [filterName, filterList] of Object.entries(lists)) {
 		const ulSection = document.getElementById(`filter_list_${filterName}`)
 		ulSection.innerHTML = ''
 
-		// on génère la liste html via la filterFactory
-		let filterListModel = filterFactory(filterList)
-		const filterListCardDOM = filterListModel.getFilterListCardDOM()
+		// on génère la liste html via la createFilterList
+		let filterListModel = createFilterList(filterList)
+		const filterListCardDOM = filterListModel.generateFilterElements()
 
 		// on postionne un eventlistener sur chaque option de filtre li
 		Object.values(filterListCardDOM).forEach((li) => {
@@ -150,6 +150,7 @@ async function init() {
 }
 
 init()
+
 
 //------------------------------------------------------------------------------------------
 // Réinitialisation de la page
