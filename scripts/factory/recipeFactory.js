@@ -1,111 +1,82 @@
+/**
+ * Factory de recettes qui crée une carte HTML de recette à partir des informations fournies.
+ * @param {Object} recipe - Les informations de la recette.
+ * @returns {Object} - Objet contenant les méthodes pour obtenir la carte de recette et les informations associées.
+ */
 export function recipeFactory(recipe) {
-	const { name, ingredients, time, description, appliance, ustensils } = recipe
+  const { name, ingredients, time, description, appliance, ustensils } = recipe;
 
-	// renvoi l'élément HTML d'une recette
-	function getRecipeCardDOM() {
-		const card = document.createElement('article')
-		card.classList.add('recipe_card')
+  /**
+   * Retourne la carte HTML de la recette.
+   * @returns {string} - La carte HTML de la recette.
+   */
+  function getRecipeCard() {
+    const card = `
+      <article class="recipe_card">
+        <a href="#" class="recipe_link">
+          <div class="recipe_img"></div>
+          <div class="recipe_content">
+            <header class="recipe_header">
+              <h2>${name}</h2>
+              <div class="recipe_time">
+                <i class="far fa-clock"></i>
+                <p class="recipe_minute">${time} min</p>
+              </div>
+            </header>
+            <div class="recipe_details">
+              <div class="recipe_ingredients">
+                <ul class="recipe_ingredients_list">
+                  ${ingredients
+                    .map(
+                      (ingredient) => `
+                        <li class="li_recipe">
+                          <p class="recipe_ingredient">${ingredient['ingredient']}</p>
+                          <p>${('ingredient' in ingredient && 'quantity' in ingredient && 'unit' in ingredient) ? `: ${ingredient['quantity']}${ingredient['unit']}` : `: ${ingredient['quantity']}`}</p>
+                        </li>
+                      `
+                    )
+                    .join('')}
+                </ul>
+              </div>
+              <div class="recipe_description">
+                <p class="recipe_description_text">${description.slice(0, 150)}...</p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </article>
+    `;
 
-		const link = document.createElement('a')
-		link.setAttribute('href', '#')
-		link.classList.add('recipe_link')
-		card.appendChild(link)
+    return card;
+  }
 
-		const img = document.createElement('div')
-		img.classList.add('recipe_img')
-		link.appendChild(img)
+  const recipeCard = getRecipeCard();
+  const container = document.createElement('div');
+  container.insertAdjacentHTML('beforeend', recipeCard);
 
-		const content = document.createElement('div')
-		content.classList.add('recipe_content')
-		link.appendChild(content)
+  return {
+    /**
+     * Retourne la carte de recette au format HTML.
+     * @returns {string} - La carte de recette au format HTML.
+     */
+    getRecipeCard: () => container.innerHTML,
 
-		const header = document.createElement('header')
-		header.classList.add('recipe_header')
-		content.appendChild(header)
+    /**
+     * Retourne la liste des ingrédients de la recette en minuscules.
+     * @returns {Array} - Liste des ingrédients de la recette en minuscules.
+     */
+    getIngredients: () => ingredients.map(ingredient => ingredient['ingredient'].toLowerCase()),
 
-		const h2 = document.createElement('h2')
-		h2.textContent = name
-		header.appendChild(h2)
+    /**
+     * Retourne l'appareil de la recette en minuscules.
+     * @returns {string} - L'appareil de la recette en minuscules.
+     */
+    getAppliances: () => appliance.toLowerCase(),
 
-		const timing = document.createElement('div')
-		timing.classList.add('recipe_time')
-		header.appendChild(timing)
-
-		const clock = document.createElement('i')
-		clock.classList.add('far', 'fa-clock')
-		timing.appendChild(clock)
-
-		const minute = document.createElement('p')
-		minute.classList.add('recipe_minute')
-		minute.textContent = `${time} min`
-		timing.appendChild(minute)
-
-		const details = document.createElement('div')
-		details.classList.add('recipe_details')
-		content.appendChild(details)
-
-		const recipeIngredients = document.createElement('div')
-		recipeIngredients.classList.add('recipe_ingredients')
-		details.appendChild(recipeIngredients)
-
-		const ingredientsList = document.createElement('ul')
-		ingredientsList.classList.add('recipe_ingredients_list')
-		recipeIngredients.appendChild(ingredientsList)
-
-		ingredients.forEach((ingredient) => {
-			const food = document.createElement('li')
-			food.classList.add('li_recipe')
-
-			const foodIngd = document.createElement('p')
-			foodIngd.classList.add('recipe_ingredient')
-			foodIngd.textContent = `${ingredient['ingredient']}`
-			food.appendChild(foodIngd)
-
-			const foodQty = document.createElement('p')
-			if (('ingredient' in ingredient) & ('quantity' in ingredient) & ('unit' in ingredient)) {
-				foodQty.textContent = `: ${ingredient['quantity']}${ingredient['unit']}`
-			} else if (('ingredient' in ingredient) & ('quantity' in ingredient)) {
-				foodQty.textContent = `: ${ingredient['quantity']}`
-			}
-			food.appendChild(foodQty)
-			ingredientsList.appendChild(food)
-		})
-
-		const recipeDescription = document.createElement('div')
-		recipeDescription.classList.add('recipe_description')
-		details.appendChild(recipeDescription)
-
-		const descriptionText = document.createElement('p')
-		descriptionText.classList.add('recipe_description_text')
-		descriptionText.textContent = description.slice(0, 150) + '...'
-		recipeDescription.appendChild(descriptionText)
-
-		return card
-	}
-
-	// renvoi les ingrédients d'une recette
-	function getIngredients() {
-		const formatedIngredients = []
-		ingredients.forEach((ingredient) => {
-			formatedIngredients.push(ingredient['ingredient'].toLowerCase())
-		})
-		return formatedIngredients
-	}
-
-	// renvoi les appareils d'une recette
-	function getAppliances() {
-		const formatedAppliance = appliance.toLowerCase()
-		return formatedAppliance
-	}
-
-	// renvoi les ustensiles d'une recette
-	function getUstensiles() {
-		const formatedUstensils = []
-		ustensils.forEach((ustensil) => {
-			formatedUstensils.push(ustensil.toLowerCase())
-		})
-		return formatedUstensils
-	}
-
-	return { getRecipeCardDOM, getIngredients, getAppliances, getUstensiles }
+    /**
+     * Retourne la liste des ustensiles de la recette en minuscules.
+     * @returns {Array} - Liste des ustensiles de la recette en minuscules.
+     */
+    getUstensiles: () => ustensils.map(ustensil => ustensil.toLowerCase())
+  };
 }

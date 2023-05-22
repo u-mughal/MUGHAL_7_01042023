@@ -1,6 +1,6 @@
 import { getRecipes } from './api/services.js'
 import { recipeFactory } from './factory/recipeFactory.js'
-import { filterFactory } from './factory/filterFactory.js'
+import { createFilterList } from './factory/createFilterList.js'
 import { filterRecipes, sortRecipes } from './utils/filterAlgo.js'
 import { toggleDropDown } from './utils/dropdown.js'
 import { format } from './utils/format.js'
@@ -27,19 +27,19 @@ const inputsFilter = document.querySelectorAll('.filter_input')
 
 // création et affichage des cards recette via la recipeFactory
 function displayRecipes(recipes) {
-	sortRecipes(recipes, `name`)
-	const recipesSection = document.getElementById('recipes')
-	recipesSection.innerHTML = ''
+  sortRecipes(recipes, 'name');
+  const recipesSection = document.getElementById('recipes');
+  recipesSection.innerHTML = '';
 
-	recipes.forEach((recipe) => {
-		let recipeModel = recipeFactory(recipe)
-		const recipeCardDOM = recipeModel.getRecipeCardDOM()
-		recipesSection.appendChild(recipeCardDOM)
-	})
+  recipes.forEach((recipe) => {
+    let recipeModel = recipeFactory(recipe);
+    const recipeCardHTML = recipeModel.getRecipeCard();
+    recipesSection.insertAdjacentHTML('beforeend', recipeCardHTML);
+  });
 }
 
 // création liste ingrédients via la recipeFactory
-function createListIngredients(recipes) {
+function generateIngredientList(recipes) {
 	let ingredientsListBrut = []
 
 	recipes.forEach((recipe) => {
@@ -55,7 +55,7 @@ function createListIngredients(recipes) {
 }
 
 // création liste appareils via la recipeFactory
-function createListAppliances(recipes) {
+function generateApplianceList(recipes) {
 	let applianceListBrut = []
 
 	recipes.forEach((recipe) => {
@@ -71,7 +71,7 @@ function createListAppliances(recipes) {
 }
 
 // création liste ustensiles via la recipeFactory
-function createListUstensils(recipes) {
+function generateUstensilList(recipes) {
 	let ustensilsListBrut = []
 
 	recipes.forEach((recipe) => {
@@ -95,22 +95,22 @@ function groupLists() {
 }
 
 function listInit(recipes) {
-	createListIngredients(recipes)
-	createListAppliances(recipes)
-	createListUstensils(recipes)
+	generateIngredientList(recipes)
+	generateApplianceList(recipes)
+	generateUstensilList(recipes)
 	groupLists()
 }
 
-//génération des listes de filtres via la filterFactory
+//génération des listes de filtres via la createFilterList
 function displayFilterList(lists, keyword = null) {
 	// pour chaque filtre Ing, App, Usten
 	for (const [filterName, filterList] of Object.entries(lists)) {
 		const ulSection = document.getElementById(`filter_list_${filterName}`)
 		ulSection.innerHTML = ''
 
-		// on génère la liste html via la filterFactory
-		let filterListModel = filterFactory(filterList)
-		const filterListCardDOM = filterListModel.getFilterListCardDOM()
+		// on génère la liste html via la createFilterList
+		let filterListModel = createFilterList(filterList)
+		const filterListCardDOM = filterListModel.generateFilterElements()
 
 		// on postionne un eventlistener sur chaque option de filtre li
 		Object.values(filterListCardDOM).forEach((li) => {
@@ -154,7 +154,7 @@ init()
 
 //------------------------------------------------------------------------------------------
 // Réinitialisation de la page
-function pageReset() {
+function resetRecipePage() {
 	displayRecipes(recipes)
 	listInit(recipes)
 	displayFilterList(lists)
@@ -209,7 +209,7 @@ searchBar.addEventListener('input', (e) => {
 			recipesSection.classList.remove('empty')
 		}
 	} else {
-		pageReset()
+		resetRecipePage()
 		cross.style.display = 'none'
 	}
 })
@@ -223,7 +223,7 @@ function initResetSearchbar() {
 function resetSearchbar() {
 	searchBarForm.reset()
 	cross.style.display = 'none'
-	pageReset()
+	resetRecipePage()
 	// si tag actif, reset
 	if (tagList.length != 0) {
 		tagSectionReset()
@@ -389,7 +389,7 @@ function filterByTag(recipes, globalKeyword) {
 		})
 	} else {
 		filteredRecipesByTag = []
-		pageReset()
+		resetRecipePage()
 	}
 }
 
