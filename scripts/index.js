@@ -38,7 +38,7 @@ function displayRecipes(recipes) {
 }
 
 // création liste ingrédients via la recipeFactory
-function createListIngredients(recipes) {
+function generateIngredientList(recipes) {
 	let ingredientsListBrut = []
 
 	recipes.forEach((recipe) => {
@@ -54,7 +54,7 @@ function createListIngredients(recipes) {
 }
 
 // création liste appareils via la recipeFactory
-function createListAppliances(recipes) {
+function generateApplianceList(recipes) {
 	let applianceListBrut = []
 
 	recipes.forEach((recipe) => {
@@ -70,7 +70,7 @@ function createListAppliances(recipes) {
 }
 
 // création liste ustensiles via la recipeFactory
-function createListUstensils(recipes) {
+function generateUstensilList(recipes) {
 	let ustensilsListBrut = []
 
 	recipes.forEach((recipe) => {
@@ -94,9 +94,9 @@ function groupLists() {
 }
 
 function listInit(recipes) {
-	createListIngredients(recipes)
-	createListAppliances(recipes)
-	createListUstensils(recipes)
+	generateIngredientList(recipes)
+	generateApplianceList(recipes)
+	generateUstensilList(recipes)
 	groupLists()
 }
 
@@ -154,7 +154,7 @@ init()
 
 //------------------------------------------------------------------------------------------
 // Réinitialisation de la page
-function pageReset() {
+function resetRecipePage() {
 	displayRecipes(recipes)
 	listInit(recipes)
 	displayFilterList(lists)
@@ -209,7 +209,7 @@ searchBar.addEventListener('input', (e) => {
 			recipesSection.classList.remove('empty')
 		}
 	} else {
-		pageReset()
+		resetRecipePage()
 		cross.style.display = 'none'
 	}
 })
@@ -223,7 +223,7 @@ function initResetSearchbar() {
 function resetSearchbar() {
 	searchBarForm.reset()
 	cross.style.display = 'none'
-	pageReset()
+	resetRecipePage()
 	// si tag actif, reset
 	if (tagList.length != 0) {
 		tagSectionReset()
@@ -388,7 +388,7 @@ function filterByTag(recipes, globalKeyword) {
 		})
 	} else {
 		filteredRecipesByTag = []
-		pageReset()
+		resetRecipePage()
 	}
 }
 
