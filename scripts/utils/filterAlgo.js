@@ -1,8 +1,12 @@
 import { format } from './format.js'
 
-// déclaration variable
 let filteredRecipes = []
 
+/**
+ * Trie les recettes en fonction d'une clé spécifiée.
+ * @param {Array} filterRecipes - Les recettes à filtrer.
+ * @param {string} key - La clé de tri.
+ */
 export function sortRecipes(filterRecipes, key) {
 	for (let i = 0; i < filterRecipes.length; i++) {
 		const currentKey = filterRecipes[i][key]
@@ -16,6 +20,12 @@ export function sortRecipes(filterRecipes, key) {
 	}
 }
 
+/**
+ * Filtre les recettes en fonction de la valeur saisie et renvoie une liste de recettes filtrées.
+ * @param {string} value - La valeur de filtrage saisie.
+ * @param {Array} recipes - La liste complète des recettes.
+ * @returns {Array} - Une liste de recettes filtrées.
+ */
 export function filterRecipes(value, recipes) {
 	filteredRecipes = []
 	const inputFormated = format(value)
