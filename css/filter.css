@@ -1,13 +1,16 @@
+/* Filtres */
 #filters {
   display: flex;
   flex-direction: column;
 }
 
+/* Boutons des filtres */
 #filters_buttons {
   display: flex;
   gap: 20px;
 }
 
+/* Tags des filtres */
 #filters_tags {
   display: flex;
   gap: 20px;
@@ -43,6 +46,7 @@
   padding-top: 20px;
 }
 
+/* Bouton de filtre */
 .filter_btn {
   width: 170px;
   padding: 20px;
@@ -68,6 +72,7 @@
   position: relative;
 }
 
+/* Styles spécifiques aux filtres ingrédients */
 #filter_btn_ingredient,
 #input_ingredient,
 #filter_list_ingredient,
@@ -75,6 +80,7 @@
   background-color: #3282f7;
 }
 
+/* Styles spécifiques aux filtres appareils */
 #filter_btn_appliance,
 #input_appliance,
 #filter_list_appliance,
@@ -82,6 +88,7 @@
   background-color: #68d9a4;
 }
 
+/* Styles spécifiques aux filtres ustensiles */
 #filter_btn_ustensil,
 #input_ustensil,
 #filter_list_ustensil,
@@ -89,6 +96,7 @@
   background-color: #ed6454;
 }
 
+/* Champ de saisie pour les filtres */
 .filter_input {
   width: 667px;
   border: none;
@@ -134,11 +142,12 @@
   right: 15px;
 }
 
-.filter_list{
-  display: none; 
-  grid-auto-flow: column; 
-  grid-template-rows: repeat(10, 1fr); 
-  gap: 10px 40px; 
+/* Liste des filtres */
+.filter_list {
+  display: none;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(10, 1fr);
+  gap: 10px 40px;
   position: absolute;
   height: 397px;
   width: 667px;
@@ -149,6 +158,7 @@
   z-index: 99;
 }
 
+/* Barre de défilement */
 .scrollbar::-webkit-scrollbar {
   width: 10px;
 }
@@ -167,6 +177,7 @@
   background: rgba(255, 255, 255, 0.795);
 }
 
+/* Élément de filtre */
 .filter_li {
   color: white;
   width: 180px;
@@ -179,10 +190,9 @@
 .filter_li:hover {
   font-weight: bolder;
   width: 155px;
-  overflow: visible; 
-  white-space: normal;  
 }
 
+/* Élément de filtre sélectionné */
 .selected {
  color: #ffffff80;
  cursor: default ;

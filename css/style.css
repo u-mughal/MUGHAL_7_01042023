@@ -14,7 +14,7 @@ body {
 @media screen and (min-width: 2501px){
   body {
     max-width: 1800px;
-    margin: 50px auto;
+    margin: auto;
   }
 }
 
@@ -22,31 +22,17 @@ body {
 @media screen and (min-width: 1440px) and (max-width: 2500px){
   body {
     max-width: 1240px;
-    margin: 20px auto;
+    margin: auto;
   }
 }
 
-/* Small Desktop */
-@media screen and (min-width: 851px) and (max-width: 1260px) {
+/* Small Desktop and Tablette */
+@media screen and (min-width: 426px) and (max-width: 1260px) {
   #recipes {
     grid-template-columns: repeat(2, 1fr);
   }
   .filter_form, .filter_input, .filter_list  {
     width: 443px;
-  }
-}
-@media screen and (max-width: 850px) {
-  #recipes {
-    grid-template-columns:62.5%; 
-    justify-content: center; 
-  }
-}
-
-/* Tablette */
-@media screen and (min-width: 426px) and (max-width: 768px) {
-  #recipes {
-    grid-template-columns: 1fr; 
-    justify-content: center; 
   }
   #filters_buttons {
     flex-direction: column;
@@ -64,8 +50,9 @@ body {
 
 /* Mobile */
 @media screen and (max-width: 425px) {
-  body {
-    margin: 10px 10px;
+  #recipes {
+    grid-template-columns: none;
+    justify-content: center;
   }
   #filters_buttons {
     flex-direction: column;
@@ -73,8 +60,8 @@ body {
   .filter_btn {
     width: 100%;
   }
-  .filter_form, .filter_input, .filter_list {
-    width: 405px;
+  .filter_form, .filter_input, .filter_list  {
+    width: 365px;
   }
   .filter_list {
     gap: 10px 10px;
@@ -84,10 +71,6 @@ body {
   }
   .filter_input {
     font-size: 18px;
-  }
-  #recipes {
-    grid-template-columns: 1fr;
-    grid-row-gap: 0;
   }
   #search_recipe {
     white-space: nowrap;
@@ -102,28 +85,5 @@ body {
     font-size: 25px;
     top: 20px;
     right: 25px;
-  }
-  .recipe_card {
-    transform: scale(0.85);
-  }
-}
-
-/* Mobile Medium */
-@media screen and (max-width: 375px) {
-  .filter_form, .filter_input, .filter_list {
-    width: 355px;
-  }
-}
-
-/* Mobile Extra Small */
-@media screen and (max-width: 320px) {
-  .filter_form, .filter_input, .filter_list  {
-    width: 300px;
-  }
-  .filter_li {
-    width: 284px;
-  }
-  .recipe_card {
-    transform: scale(0.8);
   }
 }
